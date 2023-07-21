@@ -29,7 +29,7 @@
       }
       body {
         margin: 0;
-        padding: 0 !important;
+        padding: 0;
         height: 100vh !important;
         width: 100vw !important;
         top: 0 !important;
@@ -38,6 +38,11 @@
       </style>
   </head>
   <body bgcolor="2e2929">
+    <script>
+      if (['0.0.0.0', 'localhost', '127.0.0.1'].includes(document.location.hostname)) {
+        document.body.style.padding = '10% 10%';
+      }
+    </script>
     <article>
         <h1>I&rsquo;ll be back soon!</h1>
         <div>

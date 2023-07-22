@@ -1,0 +1,35 @@
+/*a { color: #dc8100; text-decoration: none; }
+a:hover { color: #efe8e8; text-decoration: none; }*/
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh !important;
+    width: 100vw !important;
+    top: 0 !important;
+    position: fixed;
+    overflow: hidden;
+}
+
+img.file {
+    content: url('../asset/file.svg');
+}
+
+img.dir {
+    content: url('../asset/dir.svg');
+}
+
+.location#location-div * {
+    user-select: none;
+}
+
+.blob-view .content {
+    max-height: 65vh;
+    overflow: auto;
+    padding: 0;
+}
+
+.blob-view .content pre {
+    margin: 0;
+    padding: 1% 1%;
+    text-wrap: balance;
+}

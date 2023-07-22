@@ -19,11 +19,10 @@
 }
 
 html, body {
-    min-height: 100%;
+    min-height: 100vh;
 }
 
 body {
-    overflow-y: scroll;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     margin-top: 0;
     margin-bottom: 0;
@@ -39,7 +38,9 @@ input {
 
 .container {
     position: relative;
-    min-height: 100%;
+    max-height: 100vh;
+    overflow: auto;
+
 }
 
 .container > *:first-child {
@@ -181,12 +182,8 @@ article.readme, .blob-view {
     max-width: 100%;
 }
 
-.highlight-chroma {
-    background-color: var(--background-color);
-}
-
 .footer {
-    position: absolute;
+    zoom: 1.5;
     bottom: 0;
     width: 100%;
     height: 3rem;
@@ -198,4 +195,64 @@ article.readme, .blob-view {
 
 .footer a {
     color: var(--link-color);
+}
+
+
+.markdown {
+    font-size: .9rem;
+    padding: 2em;
+}
+.markdown h1 {
+    font-size: 1.5rem;
+    margin: 1em 0;
+    padding-bottom: .3em;
+    border-bottom: 1px solid var(--markdown-line-color);
+}
+.markdown h2 {
+    font-size: 1.3rem;
+    margin: 1em 0;
+    padding-bottom: .3em;
+    border-bottom: 1px solid var(--markdown-line-color);
+}
+.markdown p {
+    line-height: 1.5;
+}
+.markdown img {
+    vertical-align: middle;
+    max-width: 100%;
+}
+.markdown a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+.markdown a:hover {
+    text-decoration: underline;
+}
+
+.markdown pre {
+    background-color: var(--background-color);
+    font-size: .8rem;
+    padding: .8em 1em;
+    border: 1px solid var(--markdown-line-color);
+    border-radius: 4px;
+}
+.markdown pre code {
+    background-color: inherit;
+    padding: 0;
+}
+.markdown code {
+    background-color: var(--markdown-code-color);
+    border-radius: 4px;
+    padding: 2px 4px;
+}
+.markdown p code {
+    font-size: .88em;
+}
+.markdown table {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+.markdown td, .markdown th {
+    padding: .5em 1em;
+    border: 1px solid var(--markdown-line-color);
 }

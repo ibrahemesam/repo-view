@@ -5,7 +5,8 @@
         <meta name="viewport" content="width=device-width" />
         <meta name="robots" content="noindex" />
         <meta name="robots" content="nonofollow" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+        <link rel="stylesheet" href="css/prism.css" data-noprefix />
+<!--         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css"> -->
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/theme-switch.css">
         <link rel="stylesheet" href="css/main.css">
@@ -30,6 +31,7 @@
 <!--    TODO: automatically set page title & update url on dir change      -->
     </head>
     <body>
+        <include-html src="widgets/theme-switch.html"></include-html>
         <div class="container">
             <div class="location" id="location-div">
             </div>
@@ -54,12 +56,17 @@
 
             <div class="space"></div>
             <div class="footer">
-                <include-html src="widgets/theme-switch.html"></include-html>
                 <strong>repo-view</strong>: created with ❤️ by <a href="https://www.linkedin.com/in/ibrahem-essam-eldeen-abbas-95492a218"  target="_blank">Ibrahem Essam</a>
+                <span> — inspired by: </span>
+                <a href="https://gitfront.io" target="_blank">GitFront</a>
             </div>
         </div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<!--         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script> -->
         <script src="js/include-html.js"></script>
+        <script src="js/prism.js"></script>
+<!--         <script src="https://unpkg.com/commonmark@latest/dist/commonmark.min.js"></script> -->
+        <script src="https://unpkg.com/dompurify@latest/dist/purify.min.js"></script>
+        <script src="js/marked.min.js"></script>
         <script type="module" src="js/main.js"></script>
     </body>
 </html>

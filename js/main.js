@@ -8,6 +8,7 @@ function addBtnClone() {
         const input = document.createElement('input')
         input.setAttribute('readonly', true)
         input.style.fontSize = 'bold';
+        input.style.padding = '5px';
         input.value = `git clone https://${window.token}@github.com/${window.owner}/${window.repo}`;
         clone.remove()
 
@@ -20,8 +21,16 @@ function addBtnClone() {
             document.execCommand('copy')
             treeHeaderLast.innerHTML = ''
             treeHeaderLast.style.gridTemplateColumns = '1fr'
-            treeHeaderLast.append(clone)
-            alert('Copied!')
+            treeHeaderLast.append(clone);
+            var _ = clone.onclick;
+            clone.onclick = undefined;
+            clone.textContent = 'Copied!';
+            clone.style.cursor = 'default';
+            setTimeout(() => {
+                clone.style.cursor = 'pointer';
+                clone.onclick = _;
+                clone.textContent = 'Clone';
+            }, 1500);
         }
         treeHeaderLast.innerHTML = ''
         treeHeaderLast.append(input, copy)
@@ -33,7 +42,16 @@ import { Octokit } from "https://esm.sh/octokit";
 import mime from "https://cdn.skypack.dev/mime/lite";
 mime._types.py = 'application/python'
 
-window.mime = mime;
+marked.setOptions({
+  highlight: (code, lang) => {
+    if (Prism.languages[lang]) {
+      return Prism.highlight(code, Prism.languages[lang], lang);
+    } else {
+      return code;
+    }
+  },
+});
+
 const DEFAULT_API_HEADERS = { headers: {'X-GitHub-Api-Version': '2022-11-28'} };
 
 const
@@ -46,6 +64,13 @@ const
     locationDiv = document.getElementById('location-div'),
     treeHeaderLast = document.querySelector('.tree > .header > .last');
 
+function initMarkdownView(md) {
+    var el = document.createElement('pre');
+    el.classList.add('markdown');
+    el.innerHTML = DOMPurify.sanitize(marked.parse(md));
+    previewItemContentDiv.appendChild(el);
+}
+
 async function gotoPath(path) {
     if (path.endsWith('..')) {
         // go back
@@ -56,18 +81,16 @@ async function gotoPath(path) {
     // 2 caces: requied path is a dir || file
     // if it is a dir: do dir view & view dir's README.md if exists
     // if it is a file: show content of this file
-    // if path is invalid or repo is invalid => panic
-    // TODO: update url params
-    // TODO: handle browser forward and backward btn clicks to prevent leaving page
-    try{
+    try {
         var response = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
-        owner, repo, path,
-        headers: DEFAULT_API_HEADERS.headers,
-      })
+            owner, repo, path,
+            headers: DEFAULT_API_HEADERS.headers,
+        })
     } catch ( err ) {
         if (err.response.status === 404) {
-            // TODO: owner, repo or path is invalid => panic
-            alert('[404]: owner, repo or path is invalid => panic')
+            // if path is invalid or repo is invalid => panic:-
+            // owner, repo or path is invalid => panic
+            alert('[404]: owner, repo or path is invalid')
             return;
         }
     }
@@ -77,7 +100,6 @@ async function gotoPath(path) {
         previewDiv.hidden = true;
         cwdNameDiv.innerHTML = headerName;
         treeUl.hidden = false;
-        // TODO HERE: try get README.md of that dir then unhide previewDiv
         // set treeUl items
         treeUl.querySelectorAll('tree-item').forEach(el => el.remove());
         if (path != '') {
@@ -98,6 +120,25 @@ async function gotoPath(path) {
             treeItem.setAttribute('data-item-type', item.type);
             treeUl.appendChild(treeItem);
         })
+        var readMeExists = treeUl.querySelector('[data-item-name*="readme"]') || treeUl.querySelector('[data-item-name*="README"]')
+        if (readMeExists) {
+            try {
+                response = await octokit.request('GET /repos/{owner}/{repo}/readme/{dir}', {
+                    owner, repo, dir: path,
+                    headers: DEFAULT_API_HEADERS.headers,
+                }).catch((e) => {})
+                previewItemContentDiv.innerHTML = '';
+                previewDiv.hidden = false;
+                previewItemNameDiv.innerHTML = response.data.name;
+                initMarkdownView(atob(response.data.content));
+            } catch ( err ) {
+                if (err.response.status === 404 || err.status === 404) {
+                    // no README.md, this is ok
+                } else {
+                    throw err;
+                }
+            }
+        }
     } else {
         /* path is a file */
         treeUl.hidden = true;
@@ -105,18 +146,43 @@ async function gotoPath(path) {
         previewItemContentDiv.innerHTML = '';
         var m = String(mime.getType(path)); // m.slice(0, m.indexOf('/'))
         if (m.startsWith('image/')) {
-            // TODO: img render
+            // img render
+            previewItemContentDiv.innerHTML = `
+                <div class="content-img">
+                    <img src="data:image/${headerName.split('.').at(-1)};base64,${response.data.content}">
+                </div>
+            `;
         } else if (m.endsWith('/pdf')) {
-            // TODO: pdf render
+            // pdf render
+            previewItemContentDiv.innerHTML = `
+                <div style="
+                        padding: 5%;    position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                    ">
+                    <h3 style="margin: auto; text-align: center;">PDF preview is not supported right now.</h3>
+                    <h4 style="margin: auto; text-align: center;">sorry for any inconvenience.</h4>
+                </div>
+            `;
         } else if (m.endsWith('/markdown')) {
-            // TODO: md parse
+            // md parse
+            initMarkdownView(atob(response.data.content));
         } else {
             // normal text file
-            // FIXME: use prism.js instead of highlight.js: https://prismjs.com/
-            var el = document.createElement('pre');
-            el.classList.add(headerName.split('.').at(-1))
-            el.innerHTML = atob(response.data.content)
-            hljs.highlightElement(el);
+            var
+                el = document.createElement('pre'),
+                lang = headerName.split('.').at(-1),
+                txt = atob(response.data.content);
+            if (!Prism.languages[lang]) {
+                var _ = /\blang(?:uage)?-([\w-]+)\b/i.exec(txt);
+                if (_) lang = _[1];
+            }
+            if (Prism.languages[lang]) {
+                el.innerHTML = DOMPurify.sanitize(Prism.highlight(txt, Prism.languages[lang], lang));
+            } else {
+                el.textContent = txt;
+            }
             previewItemContentDiv.appendChild(el);
         }
         previewDiv.hidden = false;
@@ -201,25 +267,25 @@ customElements.define("tree-item", TreeItem);
     var urlParams = new URLSearchParams(document.location.search);
     window.repo = urlParams.get('repo');
     if (!repo) {
-        // TODO: no repo-name is supplied => panic
-        alert('no repo-name is supplied => panic')
+        // no repo-name is supplied => panic
+        alert('no repo name is supplied in url params')
         return;
     }
     window.token = urlParams.get('token');
     if (!token) {
-        // TODO: no token is supplied => panic
-        alert('no token is supplied => panic')
+        // no token is supplied => panic
+        alert('no token is supplied in url params')
         return;
     }
     token = JSON.parse(urlParams.get('token_ready')) ? token : atob(token);
-    window.octokit = new Octokit({ auth: token });
+    window.octokit = new Octokit({ auth: token/*, log: { info: ()=>{} }*/ });
     // check token
     try {
         var tokenAuthenticatedUser = (await octokit.request('GET /user', DEFAULT_API_HEADERS)).data.login;
     } catch (err) {
         if (err.response.status === 401) {
-            // TODO: token is not valid: panic
-            alert('token is not valid: panic')
+            // token is not valid: panic
+            alert('Github access token is NOT valid')
             return;
         }
     }
@@ -233,11 +299,7 @@ customElements.define("tree-item", TreeItem);
 
     document.title = `${owner} / ${repo} · ${document.title}`;
     addBtnClone();
-    // TODO: make gutter numbers for code viles view: https://stackoverflow.com/questions/41306797/html-how-to-add-line-numbers-to-a-source-code-block
-    // TODO: render svg and imgs instead of viewing them raw
-    // TODO: wrap octokit.request with unsafe method to prevent internet errors from being miss-understood as API errors in code
-    // TODO: add online/offline events and icon to indicate online status
-    // TODO: add a spinner progress to make user wait while fetch API finish fetching data
+
 
     // get required path
     await gotoPath(path)

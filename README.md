@@ -68,7 +68,7 @@ it is a static web page. so, configuration is gonna be passed as url params.
 </pre>
 <hr>
 <pre>
-<strong>!! Warning !!</strong>: any one with the url can preview and clone the repo
+<strong style="color: orange;">!! Warning !!</strong>: any one with the url can preview and clone the repo
           so, put it only on your CV and send it only to employers
               do NOT put it on places where it may be stolen eg: https://<your_username>.github.io
                     or the production business website of the private repo
@@ -92,3 +92,4 @@ it is a static web page. so, configuration is gonna be passed as url params.
 
 - [ ] add LICENSE.txt
 - [ ] backend automation: re-new token anually using python
+- [ ] add token creation tutorial

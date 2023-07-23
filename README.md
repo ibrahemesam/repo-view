@@ -4,7 +4,7 @@
 
 - [ ] backend automation: re-new token anually using python
 - [ ] handle browser forward and backward btn clicks to prevent leaving page: https://codepen.io/tamjk/pen/NWxWOxL
-- [ ] pdf render
+- [x] pdf render
 - [ ] disable Octokit logs
 - [ ] make gutter numbers for code viles view: https://stackoverflow.com/questions/41306797/html-how-to-add-line-numbers-to-a-source-code-block
 - [ ] wrap octokit.request with unsafe method to prevent internet errors from being miss-understood as API errors in code
@@ -15,5 +15,7 @@
 - [ ] add btn for zip download and another for tar download
 - [ ] index.html TODOs
 - [ ] js/theme-switch.js TODOs
-- [ ] fixme: darkreader browser addon can't switch to light if page was set to dark
+- [x] fixme: darkreader browser addon can't switch to light if page was set to dark
+        - solution: (on js: detect when theme switch go hidden => unset dark filter & when go visible: set dark filter if it was set)
 - [ ] document this project
+    - useless b64 token in url params is for لسبب نفسي + ان التوكن ميبقاش مباشر في اللنك

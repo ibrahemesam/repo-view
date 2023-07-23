@@ -54,3 +54,34 @@ body:has(#preview-div[hidden]) ul.tree {
 body:has(ul.tree[hidden]) .blob-view .content {
     height: 70vh !important;
 }
+
+div.footer {
+    transform: translateY(-50%);
+}
+
+body:has(#preview-div[hidden]) div.footer,
+body:has(ul.tree[hidden]) div.footer
+{
+    position: fixed;
+    bottom: 1em;
+}
+
+body:has(ul.tree[hidden]):has(#preview-div[hidden]):has(.container div.location[hidden]) div.footer {
+    position: fixed;
+    top: 0%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: auto;
+    padding: 10px;
+    border: solid;
+    outline: none;
+    user-select: none;
+    border-radius: 5px;
+    border-color: cornflowerblue;
+    height: fit-content;
+    width: max-content;
+}
+
+div.location * {
+    direction: ltr;
+}

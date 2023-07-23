@@ -52,7 +52,10 @@ marked.setOptions({
   },
 });
 
-const DEFAULT_API_HEADERS = { headers: {'X-GitHub-Api-Version': '2022-11-28'} };
+const DEFAULT_API_HEADERS = { headers: {
+    'X-GitHub-Api-Version': '2022-11-28',
+    'Accept-Charset': 'UTF-8'
+} };
 
 const
     rawBtn = document.getElementById('raw-btn'),
@@ -67,9 +70,18 @@ const
 function initMarkdownView(md) {
     var el = document.createElement('pre');
     el.classList.add('markdown');
+    console.log(md);
     el.innerHTML = DOMPurify.sanitize(marked.parse(md));
     previewItemContentDiv.appendChild(el);
 }
+
+function decodeContent(str) {
+    // Going backwards: from bytestream, to percent-encoding, to original string.
+    return decodeURIComponent(atob(str).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+}
+
 
 async function gotoPath(path) {
     if (path.endsWith('..')) {
@@ -130,7 +142,7 @@ async function gotoPath(path) {
                 previewItemContentDiv.innerHTML = '';
                 previewDiv.hidden = false;
                 previewItemNameDiv.innerHTML = response.data.name;
-                initMarkdownView(atob(response.data.content));
+                initMarkdownView(decodeContent(response.data.content));
             } catch ( err ) {
                 if (err.response.status === 404 || err.status === 404) {
                     // no README.md, this is ok
@@ -147,33 +159,44 @@ async function gotoPath(path) {
         var m = String(mime.getType(path)); // m.slice(0, m.indexOf('/'))
         if (m.startsWith('image/')) {
             // img render
+            var b64content = response.data.content;
+            if (b64content) {
+                var imgSrc = `data:image/${headerName.split('.').at(-1)};base64,${response.data.content}`;
+            } else {
+                var imgSrc = response.data.download_url;
+            }
             previewItemContentDiv.innerHTML = `
                 <div class="content-img">
-                    <img src="data:image/${headerName.split('.').at(-1)};base64,${response.data.content}">
+                    <img src="${imgSrc}">
                 </div>
             `;
         } else if (m.endsWith('/pdf')) {
             // pdf render
             previewItemContentDiv.innerHTML = `
-                <div style="
-                        padding: 5%;    position: absolute;
-                        top: 50%;
-                        left: 50%;
-                        transform: translate(-50%, -50%);
-                    ">
-                    <h3 style="margin: auto; text-align: center;">PDF preview is not supported right now.</h3>
-                    <h4 style="margin: auto; text-align: center;">sorry for any inconvenience.</h4>
-                </div>
+                <iframe
+                    src="https://mozilla.github.io/pdf.js/web/viewer.html?file=${response.data.download_url}"
+                    frameborder="0" style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:99%;width:100%;"
+                    >
+                    <div style="
+                            padding: 5%;    position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                        ">
+                        <h3 style="margin: auto; text-align: center;">PDF preview is not supported in this browser.</h3>
+                        <h4 style="margin: auto; text-align: center;">sorry for any inconvenience.</h4>
+                    </div>
+                </iframe>
             `;
         } else if (m.endsWith('/markdown')) {
             // md parse
-            initMarkdownView(atob(response.data.content));
+            initMarkdownView(decodeContent(response.data.content));
         } else {
             // normal text file
             var
                 el = document.createElement('pre'),
                 lang = headerName.split('.').at(-1),
-                txt = atob(response.data.content);
+                txt = decodeContent(response.data.content);
             if (!Prism.languages[lang]) {
                 var _ = /\blang(?:uage)?-([\w-]+)\b/i.exec(txt);
                 if (_) lang = _[1];
@@ -241,6 +264,7 @@ async function gotoPath(path) {
         span.innerHTML = pathSplit.at(-1);
         locationDiv.appendChild(span);
     }
+    locationDiv.hidden = false;
 
 }
 

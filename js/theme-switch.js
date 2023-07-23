@@ -27,4 +27,22 @@ if (window.useDarkTheme) {
     switchBtn.click()
 }
 
+// switchBtn.addEventListener('load',
+(() => {
+    var targetNode = document.querySelector('html');
+    (new MutationObserver(function(){
+        if(targetNode.hasAttribute('data-darkreader-scheme')){
+            // darkreader addon got activated
+            darkreader.disable();
+        } else {
+            // darkreader addon got un-activated
+            if (toggle) {
+                darkreader.disable();
+            } else {
+                darkreader.enable();
+            }
+        }
+    })).observe(targetNode, { attributes: true });
+})();
+
 // <!--  TODO: save dark theme cfg in cookies  -->

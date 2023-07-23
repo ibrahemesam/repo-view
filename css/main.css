@@ -39,6 +39,7 @@ img.dir {
     width: calc(100% - 4.8em);
 }*/
 
+
 .blob-view .content pre.line-numbers {
     width: calc(100% - 4.8em);
 }
@@ -49,6 +50,7 @@ img.dir {
 
 .blob-view .content pre:not(.line-numbers) {
     padding: 1% 1%;
+    width: 98%;
 /*     text-wrap: balance; */
 }
 

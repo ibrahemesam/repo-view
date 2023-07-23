@@ -42,7 +42,7 @@ import { Octokit } from "https://esm.sh/octokit";
 import mime from "https://cdn.skypack.dev/mime/lite";
 mime._types.py = 'application/python'
 
-marked.setOptions({
+marked.use({
   highlight: (code, lang) => {
     if (Prism.languages[lang]) {
       return Prism.highlight(code, Prism.languages[lang], lang);
@@ -50,6 +50,8 @@ marked.setOptions({
       return code;
     }
   },
+  pedantic: false,
+  gfm: true,
 });
 
 const DEFAULT_API_HEADERS = { headers: {

@@ -257,3 +257,6 @@ article.readme, .blob-view {
     padding: .5em 1em;
     border: 1px solid var(--markdown-line-color);
 }
+.markdown br {
+    display: none;
+}

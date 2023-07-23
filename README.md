@@ -41,7 +41,7 @@ my repo-view do exactly the same except that:
 <hr>
 <h1>Usage :-</h1>
 <pre>
-it is a static web page. so, configuration is gonna passed as url params.
+it is a static web page. so, configuration is gonna be passed as url params.
 <h2>params :-</h2>
 <strong>token</strong> : string => github access_token
     warning: use only tokens with only permissions: repos read-only<br>

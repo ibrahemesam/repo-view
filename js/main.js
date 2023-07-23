@@ -38,11 +38,11 @@ function addBtnClone() {
     treeHeaderLast.append(clone)
 }
 
-import { Octokit } from "https://esm.sh/octokit";
+import { Octokit } from "https://esm.sh/@octokit/core";
 import mime from "https://cdn.skypack.dev/mime/lite";
 mime._types.py = 'application/python'
 
-marked.use({
+marked.setOptions({
   highlight: (code, lang) => {
     if (Prism.languages[lang]) {
       return Prism.highlight(code, Prism.languages[lang], lang);
@@ -58,6 +58,7 @@ const DEFAULT_API_HEADERS = { headers: {
     'X-GitHub-Api-Version': '2022-11-28',
     'Accept-Charset': 'UTF-8'
 } };
+const NEW_LINE_EXP = /\n(?!$)/g;
 
 const
     rawBtn = document.getElementById('raw-btn'),
@@ -181,7 +182,7 @@ async function gotoPath(path) {
             previewItemContentDiv.innerHTML = `
                 <iframe
                     src="https://mozilla.github.io/pdf.js/web/viewer.html?file=${response.data.download_url}"
-                    frameborder="0" style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:99%;width:100%;"
+                    frameborder="0" style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:100%;width:100%;"
                     >
                     <div style="
                             padding: 5%;    position: absolute;
@@ -200,19 +201,29 @@ async function gotoPath(path) {
         } else {
             // normal text file
             var
-                el = document.createElement('pre'),
+                pre = document.createElement('pre'),
+                code = document.createElement('code'),
                 lang = headerName.split('.').at(-1),
                 txt = decodeContent(response.data.content);
             if (!Prism.languages[lang]) {
                 var _ = /\blang(?:uage)?-([\w-]+)\b/i.exec(txt);
                 if (_) lang = _[1];
+                else lang = 'none';
             }
-            if (Prism.languages[lang]) {
-                el.innerHTML = DOMPurify.sanitize(Prism.highlight(txt, Prism.languages[lang], lang));
-            } else {
-                el.textContent = txt;
-            }
-            previewItemContentDiv.appendChild(el);
+            // if (Prism.languages[lang]) {
+            pre.className = "line-numbers language-" + lang;
+            code.className = "language-" + lang;
+            code.style.display = 'inline-block';
+            var match = txt.match(NEW_LINE_EXP);
+            var lineNumbersWrapper = `<span aria-hidden="true" class="line-numbers-rows">${
+                new Array((match ? match.length + 1 : 1) + 1).join('<span></span>')
+            }</span>`;
+            code.innerHTML = DOMPurify.sanitize(Prism.highlight(txt, Prism.languages[lang], lang)) + lineNumbersWrapper;
+            pre.appendChild(code);
+            // } else {
+                // el.textContent = txt;
+            // }
+            previewItemContentDiv.appendChild(pre);
         }
         previewDiv.hidden = false;
         // set Raw url
@@ -308,7 +319,30 @@ customElements.define("tree-item", TreeItem);
         return;
     }
     token = JSON.parse(urlParams.get('token_ready')) ? token : atob(token);
-    window.octokit = new Octokit({ auth: token/*, log: { info: ()=>{} }*/ });
+    window.octokit = new Octokit({ auth: token });
+
+    // wrap octokit.request with unsafe method to overcome internet disconnections
+    var onlineLock = {};
+    onlineLock.lock = () => {onlineLock.p = new Promise(r => onlineLock.unlock = r)}
+    onlineLock.wait = () => onlineLock.p;
+    window.addEventListener("online", (event) => {
+        onlineLock.unlock();
+    });
+    var __octokit_request = octokit.request;
+    octokit.request = async function() {
+        while (true) {
+            onlineLock.lock();
+            try {
+                return await __octokit_request.apply(null, arguments);
+            } catch ( err ) {
+                // when  net::ERR_INTERNET_DISCONNECTED error catched has .response undefined
+                if (err.response !== undefined) throw err;
+                // wait for 'online' event before retrying
+                await onlineLock.wait();
+            }
+        }
+    }
+
     // check token
     try {
         var tokenAuthenticatedUser = (await octokit.request('GET /user', DEFAULT_API_HEADERS)).data.login;

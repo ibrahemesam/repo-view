@@ -29,7 +29,25 @@ img.dir {
 }
 
 .blob-view .content pre {
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 0;
     margin: 0;
+}
+
+/*.blob-view .content pre code {
+    width: calc(100% - 4.8em);
+}*/
+
+.blob-view .content pre.line-numbers {
+    width: calc(100% - 4.8em);
+}
+
+.blob-view .content:has(iframe[src*="pdf.js"]) {
+    overflow-y: hidden;
+}
+
+.blob-view .content pre:not(.line-numbers) {
     padding: 1% 1%;
 /*     text-wrap: balance; */
 }

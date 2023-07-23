@@ -67,11 +67,15 @@ const
     locationDiv = document.getElementById('location-div'),
     treeHeaderLast = document.querySelector('.tree > .header > .last');
 
-function initMarkdownView(md) {
+async function initMarkdownView(md) {
     var el = document.createElement('pre');
     el.classList.add('markdown');
-    console.log(md);
+    // console.log(md);
     el.innerHTML = DOMPurify.sanitize(marked.parse(md));
+    // el.innerHTML = (await octokit.request('POST /markdown', {
+    //     text: md,
+    //     headers: DEFAULT_API_HEADERS.headers
+    // })).data;
     previewItemContentDiv.appendChild(el);
 }
 

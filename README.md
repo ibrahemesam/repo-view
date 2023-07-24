@@ -25,11 +25,11 @@ there is a website called <a href="https://gitfront.io" target="_blank">GitFront
 - problem with GitFront is that: it allows hosting only less-than 100 MB repo for free account.
     if your private repo is larger than that, you gonna have to pay 💵💵💲
     ( this was the reason why I created this project )
-- your github repo does not get directly synchronized with GitFront
+- your GitFront repo does not get directly synchronized with GitHub
 </pre>
 <pre>
 my repo-view do exactly the same except that:
-- it is a static web page (no backend) -> your code exists only on Github. it does not goto any 3rd party server
+- it is a static web page (no backend) -> your code exists only on GitHub. it does not goto any 3rd party server
 - it uses official GitHub REST API, it gets files directly from GitHub
 - no problem if repo is larger than 100 MB. you still can preview it
 - it is a single page application
@@ -66,6 +66,7 @@ it is a static web page. so, configuration is gonna be passed as url params.
                     so, they wont get too excited about that token.<br>
 <strong>so</strong> the url would be: https://ibrahemesam.github.io/repo-view/?token=<token>&repo=<repo-name>&owner=<owner-username>
 </pre>
+<pre><strong>NB: </strong> public repos can also be viewed</pre>
 <hr>
 <pre>
 <strong style="color: orange;">!! Warning !!</strong>: any one with the url can preview and clone the repo
@@ -91,5 +92,6 @@ it is a static web page. so, configuration is gonna be passed as url params.
 - [ ] add online/offline events and icon to indicate online status
 
 - [ ] add LICENSE.txt
+- [ ] add demo url to README
 - [ ] backend automation: re-new token anually using python
 - [ ] add token creation tutorial

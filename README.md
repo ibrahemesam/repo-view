@@ -53,10 +53,10 @@ it is a static web page. so, configuration is gonna be passed as url params.
     if true: provide token param is gonna be used as is
     else:
         the provided token param must be provied as encodes base64 string using js "btoa" method
-        it first will be decoded back before use ( using js "atob" method )
+        it first will be decoded back before ( using js "atob" method )
         why?
             - the token does not exist readily on url:
-                if any web scrapper found the url and got the token and tried it on his terminal:
+                if any web scrapper found the url and got the token and tried it on their terminal:
                     it wont work. it fist need to be decoded
             - if the one ,to whom you send the url, tried to use the token (in their terminal)
                 before they view the url on web browser. and it worked.
@@ -64,7 +64,7 @@ it is a static web page. so, configuration is gonna be passed as url params.
                 but if it did not work (ie: it was base64-encoded): sooner or later, after they open the url,
                     they gonna find that they can just get the real token from the web page.
                     so, they wont get too excited about that token.<br>
-<strong>so</strong> the url would be: https://ibrahemesam.github.io/repo-view/?token=<token>&repo=<repo-name>&owner=<owner-username>
+<strong>so, </strong>the url would be: https://ibrahemesam.github.io/repo-view/?token=&lt;token&gt;&repo=&lt;repo-name&gt;&owner=&lt;owner-username&gt;
 </pre>
 <pre><strong>NB: </strong> public repos can also be viewed</pre>
 <hr>

@@ -95,3 +95,4 @@ it is a static web page. so, configuration is gonna be passed as url params.
 - [ ] add demo url to README
 - [ ] backend automation: re-new token anually using python
 - [ ] add token creation tutorial
+- [ ] announce about this project on LinkedIn

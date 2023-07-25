@@ -105,8 +105,8 @@ If you gonna use its code somewhere: make a clear credit refering to <a href="ht
 # project:-
 - [ ] add btn for zip download and another for tar download ( add them beside "clone" btn )
 - [ ] add online/offline events and icon to indicate online status ( add it beside "clone btn" )
-- [ ] on startup initialization: add a spinner progress to make user wait while fetch API finish fetching data (hide it using css)
-    - [ ] add prgress spinner bar that is shown only while gotoPath is executing (hide using css)
+- [x] on startup initialization: add a spinner progress to make user wait while fetch API finish fetching data (hide it using css)
+    - [x] add prgress spinner bar that is shown only while gotoPath is executing (hide using css)
         - [-] add window.onveforeunload evt. ? maybe not )~:)
     - [x] add locks to prevent gotoPath while previous gotoPath is still running:
         (eg: disable clicks on all &lt; a &gt;s (that trigger gotoPath calls) & set css cursor: default => disable them on begaining of gotoPath method itself)

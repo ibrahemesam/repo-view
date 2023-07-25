@@ -66,19 +66,19 @@ it is a static web page. so, configuration is gonna be passed as url params.
                     so, they wont get too excited about that token.<br>
 <strong>so, </strong>the url would be: https://ibrahemesam.github.io/repo-view/?token=&lt;token&gt;&repo=&lt;repo-name&gt;&owner=&lt;owner-username&gt;
 </pre>
-<pre><h1><a href="https://ibrahemesam.github.io/repo-view/?token=Z2l0aHViX3BhdF8xMUFLUEZNNEkwbzc4WkZYT3B0VWd0X1lwYjB5MU84WXNsY3RCNmpRQTg3b1ZwVjExZDFEN25OWlNheFl4NFFIbm9FMjNJUDRRNWNSQUUwZVNw&owner=ibrahemesam&repo=repo-view-demo" target="_blank">DEMO</a> :-</h1>
+<pre><h1>DEMO :-></h1> <a href="https://ibrahemesam.github.io/repo-view/?token=Z2l0aHViX3BhdF8xMUFLUEZNNEkwbzc4WkZYT3B0VWd0X1lwYjB5MU84WXNsY3RCNmpRQTg3b1ZwVjExZDFEN25OWlNheFl4NFFIbm9FMjNJUDRRNWNSQUUwZVNw&owner=ibrahemesam&repo=repo-view-demo" target="_blank">click_here</a>
 this demo repo is <a href="https://github.com/ibrahemesam/repo-view-demo">a private github repository</a>. if you visit it, you get 404 because it is <strong>Private</strong>.
 </pre>
 <pre><strong>NB: </strong> public repos can also be viewed</pre>
 <hr>
 <pre>
 <strong style="color: red;">!! Warning !!</strong>: any one with the url can preview and clone the repo
-          so, put it only on your CV and send it only to employers
-              do NOT put it on places where it may be stolen eg: https://<your_username>.github.io
-                    or the production business website of the private repo
+    so, put it only on your CV and send it only to employers
+        do NOT put it on places where it may be stolen eg: https://<your_username>.github.io
+            or the production business website of the private repo
 </pre>
 <pre><h1>To create a token :-</h1>
-1 - go to <a href="https://github.com/settings/personal-access-tokens/new">Github > settings > Developer settings > Personal access tokens > Fine-gained tokens</a>
+1 - go to <a href="https://github.com/settings/personal-access-tokens/new" target="_blank">Github > settings > Developer settings > Personal access tokens > Fine-gained tokens</a>
 2 - set "Token name" and "Expiration" date.
 3 - on "Repository access" section: select "Only select repositories" then select the repo you wanna use.
 4 - under "Permissions section": under "Repository permissions": select "Contents" with "Read-only" access level.
@@ -86,9 +86,9 @@ this demo repo is <a href="https://github.com/ibrahemesam/repo-view-demo">a priv
 </pre>
 <pre>
 <strong style="color: red;">!! Warning !!</strong>: any one with the url can get the token.
-          so, when creating the token, do NOT add any permissions to the token other than
-                read-only access to repository content (access to only one private repo. NOT all !).
-          otherwise, the token may be exploited !!
+    so, when creating the token, do NOT add any permissions to the token other than
+        read-only access to repository content (access to only one private repo. NOT all !).
+    otherwise, the token may be exploited !!
 </pre>
 <hr>
 <h1 align="center" style="margin: auto;">feel free to report any bug through issues section</h1>

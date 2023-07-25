@@ -146,14 +146,13 @@ async function gotoPath(path, boolUpdateHistory=true) {
             return;
         }
     }
-
+    treeUl.querySelectorAll('tree-item').forEach(el => el.remove());
     if (response.data.length) {
         /* path is a dir */
         previewDiv.hidden = true;
         cwdNameDiv.innerHTML = headerName;
         treeUl.hidden = false;
         // set treeUl items
-        treeUl.querySelectorAll('tree-item').forEach(el => el.remove());
         if (path != '') {
             var treeItem = document.createElement('tree-item');
             treeItem.setAttribute('data-item-name', '..');

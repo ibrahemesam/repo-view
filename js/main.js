@@ -111,7 +111,7 @@ function decodeContent(str) {
 
 function updateHistory(path) {
     history.pushState('', '',
-        `/?token=${window.tokenUrlParam}&owner=${window.owner}&repo=${window.repo}&path=${path}`
+        `?token=${window.tokenUrlParam}&owner=${window.owner}&repo=${window.repo}&path=${path}`
     );
 }
 
@@ -120,7 +120,10 @@ async function gotoPath(path, boolUpdateHistory=true) {
     // location div <a>s
     Array.from(locationDiv.querySelectorAll('a')).concat(Array.from(treeUl.querySelectorAll('tree-item a'))).forEach((a) => {
         a.onclick = undefined;
-        a.style.cursor = "default";
+        var style = a.style;
+        style.textDecoration = 'none';
+        // style.color = 'inherit';
+        style.cursor = "default";
     })
     // ..
     if (path.endsWith('..')) {

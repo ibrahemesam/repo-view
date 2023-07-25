@@ -28,7 +28,7 @@ there is a website called <a href="https://gitfront.io" target="_blank">GitFront
 - your GitFront repo does not get directly synchronized with GitHub
 </pre>
 <pre>
-my repo-view do exactly the same except that:
+my <a href="#">repo-view</a> do exactly the same except that:
 - it is a static web page (no backend) -> your code exists only on GitHub. it does not goto any 3rd party server
 - it uses official GitHub REST API, it gets files directly from GitHub
 - no problem if repo is larger than 100 MB. you still can preview it
@@ -66,8 +66,7 @@ it is a static web page. so, configuration is gonna be passed as url params.
                     so, they wont get too excited about that token.<br>
 <strong>so, </strong>the url would be: https://ibrahemesam.github.io/repo-view/?token=&lt;token&gt;&repo=&lt;repo-name&gt;&owner=&lt;owner-username&gt;
 </pre>
-<pre>
-<h1><a href="https://ibrahemesam.github.io/repo-view/?token=Z2l0aHViX3BhdF8xMUFLUEZNNEkwbzc4WkZYT3B0VWd0X1lwYjB5MU84WXNsY3RCNmpRQTg3b1ZwVjExZDFEN25OWlNheFl4NFFIbm9FMjNJUDRRNWNSQUUwZVNw&owner=ibrahemesam&repo=repo-view-demo" target="_blank">DEMO</a> :-</h1>
+<pre><h1><a href="https://ibrahemesam.github.io/repo-view/?token=Z2l0aHViX3BhdF8xMUFLUEZNNEkwbzc4WkZYT3B0VWd0X1lwYjB5MU84WXNsY3RCNmpRQTg3b1ZwVjExZDFEN25OWlNheFl4NFFIbm9FMjNJUDRRNWNSQUUwZVNw&owner=ibrahemesam&repo=repo-view-demo" target="_blank">DEMO</a> :-</h1>
 this demo repo is <a href="https://github.com/ibrahemesam/repo-view-demo">a private github repository</a>. if you visit it, you get 404 because it is <strong>Private</strong>.
 </pre>
 <pre><strong>NB: </strong> public repos can also be viewed</pre>
@@ -78,8 +77,7 @@ this demo repo is <a href="https://github.com/ibrahemesam/repo-view-demo">a priv
               do NOT put it on places where it may be stolen eg: https://<your_username>.github.io
                     or the production business website of the private repo
 </pre>
-<pre>
-<h1>To create a token :-</h1>
+<pre><h1>To create a token :-</h1>
 1 - go to <a href="https://github.com/settings/personal-access-tokens/new">Github > settings > Developer settings > Personal access tokens > Fine-gained tokens</a>
 2 - set "Token name" and "Expiration" date.
 3 - on "Repository access" section: select "Only select repositories" then select the repo you wanna use.

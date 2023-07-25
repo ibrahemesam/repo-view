@@ -33,7 +33,7 @@ my <a href="#">repo-view</a> do exactly the same except that:
 - it uses official GitHub REST API, it gets files directly from GitHub
 - no problem if repo is larger than 100 MB. you still can preview it
 - it is a single page application
-- it has some extra features eg: downloading repo as zip or tar, dark theme switch, ...
+- it has some extra features eg: dark theme switch, preview pdf, detect internet disconnect...
 </pre>
 <p align="center">
   <img src="https://github.com/ibrahemesam/repo-view/blob/main/matrix-meme.png?raw=true" />
@@ -100,13 +100,3 @@ this demo repo is <a href="https://github.com/ibrahemesam/repo-view-demo">a priv
 This project is provided "AS IS" with absolutely "NO WARRANTY".
 If you gonna use its code somewhere: make a clear credit refering to <a href="https://github.com/ibrahemesam/repo-view" target="_blank">this repo-view repository</a>.
 </pre>
-<h1>TODOs :-</h1>
-
-# project:-
-- [ ] add btn for zip download and another for tar download ( add them beside "clone" btn )
-
-
-# me:-
-- [ ] announce about this project on LinkedIn
-- [ ] backend automation: re-new token anually using python
-

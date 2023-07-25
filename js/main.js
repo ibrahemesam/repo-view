@@ -36,25 +36,6 @@ function addBtnClone() {
         treeHeaderLast.append(input, copy)
     }
     treeHeaderLast.append(clone)
-
-    return;
-    /* add btn download */
-    const down = document.createElement('a')
-    down.className = 'btn'
-    down.textContent = 'Download'
-    down.onclick = () => {
-        treeHeaderLast.style.gridTemplateColumns = '1fr 1fr'
-        const div = document.createElement('div')
-        input.style.padding = '2px';
-
-        const copy = document.createElement('a')
-        copy.className = 'btn'
-        copy.textContent = 'Copy'
-
-
-        treeHeaderLast.append(input, copy)
-    }
-    treeHeaderLast.append(down)
 }
 
 import { Octokit } from "https://esm.sh/@octokit/core";

@@ -112,16 +112,17 @@ function updateHistory(path) {
     );
 }
 
-async function gotoPath(path, boolUpdateHistory=true) {
+async function gotoPath(path, boolUpdateHistory=true, disableAels=true) {
     /* first of all: remove click event to prevent multiple concurrency calls to this methods */
-    // location div <a>s
-    Array.from(locationDiv.querySelectorAll('a')).concat(Array.from(treeUl.querySelectorAll('tree-item a'))).forEach((a) => {
-        a.onclick = undefined;
-        var style = a.style;
-        style.textDecoration = 'none';
-        // style.color = 'inherit';
-        style.cursor = "default";
-    })
+    if (disableAels) {
+        Array.from(locationDiv.querySelectorAll('a')).concat(Array.from(treeUl.querySelectorAll('tree-item a'))).forEach((a) => {
+            a.onclick = undefined;
+            var style = a.style;
+            style.textDecoration = 'none';
+            // style.color = 'inherit';
+            style.cursor = "default";
+        })
+    }
     // ..
     if (path.endsWith('..')) {
         // go back
@@ -397,7 +398,7 @@ customElements.define("tree-item", TreeItem);
 
 
     // get required path
-    await gotoPath(path)
+    await gotoPath(path, false, false);
 })();
 
 

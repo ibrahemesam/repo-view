@@ -36,6 +36,25 @@ function addBtnClone() {
         treeHeaderLast.append(input, copy)
     }
     treeHeaderLast.append(clone)
+
+    return;
+    /* add btn download */
+    const down = document.createElement('a')
+    down.className = 'btn'
+    down.textContent = 'Download'
+    down.onclick = () => {
+        treeHeaderLast.style.gridTemplateColumns = '1fr 1fr'
+        const div = document.createElement('div')
+        input.style.padding = '2px';
+
+        const copy = document.createElement('a')
+        copy.className = 'btn'
+        copy.textContent = 'Copy'
+
+
+        treeHeaderLast.append(input, copy)
+    }
+    treeHeaderLast.append(down)
 }
 
 import { Octokit } from "https://esm.sh/@octokit/core";
@@ -97,6 +116,13 @@ function updateHistory(path) {
 }
 
 async function gotoPath(path, boolUpdateHistory=true) {
+    /* first of all: remove click event to prevent multiple concurrency calls to this methods */
+    // location div <a>s
+    (locationDiv.querySelectorAll('a') + treeUl.querySelectorAll('tree-item a')).forEach((a) => {
+        a.onclick = undefined;
+        a.style.cursor = "default";
+    })
+    // ..
     if (path.endsWith('..')) {
         // go back
         path = path.split('/').slice(0, -2).join('/');
@@ -303,9 +329,9 @@ class TreeItem extends HTMLElement {
             <a>${this.getAttribute('data-item-name')}</a>
         </li>
     `;
-    this.getElementsByTagName('a')[0].addEventListener('click', () => {
+    this.getElementsByTagName('a')[0].onclick = () => {
         gotoPath(this.getAttribute('data-item-path'));
-    })
+    };
   }
 }
 customElements.define("tree-item", TreeItem);

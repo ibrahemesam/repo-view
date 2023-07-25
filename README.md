@@ -79,18 +79,21 @@ it is a static web page. so, configuration is gonna be passed as url params.
 <hr>
 <h1>TODOs :-</h1>
 
+# project:-
 - [ ] add btn for zip download and another for tar download
-
+- [ ] add online/offline events and icon to indicate online status
 - [ ] on startup initialization: add a spinner progress to make user wait while fetch API finish fetching data
     - [ ] add prgress spinner bar that is shown only while gotoPath is executing
-        - [ ] add window.onveforeunload evt. ? maybe not )~:)
+        - [-] add window.onveforeunload evt. ? maybe not )~:)
     - [ ] add locks to prevent gotoPath while previous gotoPath is still running:
         (eg: disable clicks on < a >s & set css cursor: default => disable them on gotoPath method itself)
+- [ ] add docs instead of alerts when bad url params
 
-- [ ] add online/offline events and icon to indicate online status
-
+# README:-
 - [ ] add LICENSE.txt
-- [ ] add demo url to README
-- [ ] backend automation: re-new token anually using python
+- [ ] add demo url
 - [ ] add token creation tutorial
+
+# me:-
 - [ ] announce about this project on LinkedIn
+- [ ] backend automation: re-new token anually using python

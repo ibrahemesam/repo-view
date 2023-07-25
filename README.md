@@ -72,6 +72,7 @@ this demo repo is <a href="https://github.com/ibrahemesam/repo-view-demo">a priv
 </pre>
 <pre><strong>NB: </strong> public repos can also be viewed</pre>
 <hr>
+<pre>if you like this project, give it a Star ⭐</pre
 <pre>
 <strong style="color: red;">!! Warning !!</strong>: any one with the url can preview and clone the repo
     so, put it only on your CV and send it only to employers

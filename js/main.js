@@ -118,7 +118,7 @@ function updateHistory(path) {
 async function gotoPath(path, boolUpdateHistory=true) {
     /* first of all: remove click event to prevent multiple concurrency calls to this methods */
     // location div <a>s
-    Array.from(locationDiv.querySelectorAll('a')).concat(Array.from(treeUl.querySelectorAll('tree-item a')).forEach((a) => {
+    Array.from(locationDiv.querySelectorAll('a')).concat(Array.from(treeUl.querySelectorAll('tree-item a'))).forEach((a) => {
         a.onclick = undefined;
         a.style.cursor = "default";
     })

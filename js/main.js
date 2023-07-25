@@ -108,7 +108,7 @@ function decodeContent(str) {
 
 function updateHistory(path) {
     history.pushState('', '',
-        `?token=${window.tokenUrlParam}&owner=${window.owner}&repo=${window.repo}&path=${path}`
+        `?token=${window.tokenUrlParam}&owner=${window.owner}&repo=${window.repo}${path ? '&path='+path : ''}}`
     );
 }
 

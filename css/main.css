@@ -142,3 +142,22 @@ div#loader-ellipsis-div:before {
     width: 62px;
     border-radius: 30px;
 }
+
+div#no-internet-div {
+    background-color: lightcoral;
+    position: fixed;
+    top: 2vh;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 10px;
+    background-image: url(../asset/no-wifi.svg);
+    background-repeat: no-repeat;
+    background-position: 8px center;
+    background-size: 30px;
+    height: auto;
+    align-items: center;
+    width: max-content;
+    padding: 8px;
+    font-weight: bold;
+    text-indent: 35px;
+}

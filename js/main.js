@@ -87,7 +87,23 @@ const
     treeUl = document.getElementById('tree-ul'),
     cwdNameDiv = document.getElementById('cwd-name-div'),
     locationDiv = document.getElementById('location-div'),
-    treeHeaderLast = document.querySelector('.tree > .header > .last');
+    treeHeaderLast = document.querySelector('.tree > .header > .last'),
+    noInternetDiv = document.getElementById("no-internet-div");
+
+var onlineLock = {};
+onlineLock.lock = () => {onlineLock.p = new Promise(r => onlineLock.unlock = r)}
+onlineLock.wait = () => onlineLock.p;
+
+window.addEventListener('online', () => {
+    onlineLock.unlock();
+    noInternetDiv.hidden = true;
+})
+
+window.addEventListener('offline', () => {
+    noInternetDiv.hidden = false;
+})
+
+if (!navigator.onLine) noInternetDiv.hidden = true;
 
 async function initMarkdownView(md) {
     var el = document.createElement('pre');
@@ -363,12 +379,6 @@ customElements.define("tree-item", TreeItem);
     window.octokit = new Octokit({ auth: token });
 
     // wrap octokit.request with unsafe method to overcome internet disconnections
-    var onlineLock = {};
-    onlineLock.lock = () => {onlineLock.p = new Promise(r => onlineLock.unlock = r)}
-    onlineLock.wait = () => onlineLock.p;
-    window.addEventListener("online", (event) => {
-        onlineLock.unlock();
-    });
     var __octokit_request = octokit.request;
     octokit.request = async function() {
         while (true) {

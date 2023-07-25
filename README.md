@@ -118,7 +118,7 @@ If you gonna use its code somewhere: make a clear credit refering to <a href="ht
     + token with read-only access to only this demo repo = url
         - [x] add token creation tutorial: just one png
 - [x] add dirs to demo repo
-    - [ ] git push
+    - [x] git push
 
 # me:-
 - [ ] announce about this project on LinkedIn

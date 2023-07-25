@@ -9,13 +9,15 @@ animate
     .to(".toggle-button", 0.2, { scale: 0.9 })
 
 var switchBtn = document.querySelector("div.darkreader-switch")
-switchBtn.addEventListener("click", () => {
+switchBtn.addEventListener("click", async () => {
     if(toggle){
         animate.restart();
         darkreader.enable();
+        cookieStore.set('useDarkTheme', true)
     } else {
         animate.reverse();
         darkreader.disable();
+        cookieStore.set('useDarkTheme', false)
     }
     toggle = !toggle;
 });
@@ -24,7 +26,8 @@ switchBtn.addEventListener("click", () => {
 
 
 if (window.useDarkTheme) {
-    switchBtn.click()
+    switchBtn.click();
+    delete window.useDarkTheme;
 }
 
 // switchBtn.addEventListener('load',

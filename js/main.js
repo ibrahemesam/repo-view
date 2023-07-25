@@ -90,11 +90,18 @@ function decodeContent(str) {
 }
 
 
-async function gotoPath(path) {
+function updateHistory(path) {
+    history.pushState('', '',
+        `/?token=${window.tokenUrlParam}&owner=${window.owner}&repo=${window.repo}&path=${path}`
+    );
+}
+
+async function gotoPath(path, boolUpdateHistory=true) {
     if (path.endsWith('..')) {
         // go back
         path = path.split('/').slice(0, -2).join('/');
     }
+    if (boolUpdateHistory) updateHistory(path);
     var headerName = path ? path.split('/').at(-1) : window.repo;
     // get required path
     // 2 caces: requied path is a dir || file
@@ -318,7 +325,12 @@ customElements.define("tree-item", TreeItem);
         alert('no token is supplied in url params')
         return;
     }
-    token = JSON.parse(urlParams.get('token_ready')) ? token : atob(token);
+    if (JSON.parse(urlParams.get('token_ready'))) {
+        window.tokenUrlParam = `${token}&token_ready=true`;
+    } else {
+        window.tokenUrlParam = token;
+        token = atob(token);
+    }
     window.octokit = new Octokit({ auth: token });
 
     // wrap octokit.request with unsafe method to overcome internet disconnections
@@ -369,3 +381,11 @@ customElements.define("tree-item", TreeItem);
     await gotoPath(path)
 })();
 
+
+
+window.addEventListener('popstate', function(event) {
+  gotoPath(
+    (new URLSearchParams(document.location.search)).get('path'),
+    false
+  );
+});

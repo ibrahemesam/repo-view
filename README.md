@@ -79,15 +79,13 @@ it is a static web page. so, configuration is gonna be passed as url params.
 <hr>
 <h1>TODOs :-</h1>
 
-- [ ] js/theme-switch.js TODOs && index.html TODOs
 - [ ] add btn for zip download and another for tar download
-
-- [ ] handle browser forward and backward btn clicks to prevent leaving SPA page: https://codepen.io/tamjk/pen/NWxWOxL
-- [ ] after each gotoPath run: update url params: add path to dir|file in url params => start directly from it
 
 - [ ] on startup initialization: add a spinner progress to make user wait while fetch API finish fetching data
     - [ ] add prgress spinner bar that is shown only while gotoPath is executing
-    - [ ] add locks to prevent gotoPath while previous gotoPath is still running: (eg: disable clicks on < a >s & set css cursor: default)
+        - [ ] add window.onveforeunload evt. ? maybe not )~:)
+    - [ ] add locks to prevent gotoPath while previous gotoPath is still running:
+        (eg: disable clicks on < a >s & set css cursor: default => disable them on gotoPath method itself)
 
 - [ ] add online/offline events and icon to indicate online status
 

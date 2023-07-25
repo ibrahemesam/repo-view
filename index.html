@@ -18,18 +18,23 @@
         <title>RepoView</title>
         <script type="text/javascript">
             // setup darkTheme before anything
-            // TODO: read darkTheme cookie
-            window.useDarkTheme = null;
-            if (window.matchMedia) {
-                if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                    useDarkTheme = true;
+            (async () => {
+                var useDarkThemeCookie = await cookieStore.get('useDarkTheme');
+                if (useDarkThemeCookie) {
+                    window.useDarkTheme = JSON.parse(useDarkThemeCookie.value);
                 } else {
-                    useDarkTheme = false;
+                    if (window.matchMedia) {
+                        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                            useDarkTheme = true;
+                        } else {
+                            useDarkTheme = false;
+                        }
+                    } else {
+                        useDarkTheme = true; // default is dark 🤓
+                    }
                 }
-            } else {
-                useDarkTheme = true; // default is dark 🤓
-            }
-            useDarkTheme ? darkreader.enable() : darkreader.disable();
+                useDarkTheme ? darkreader.enable() : darkreader.disable();
+            })();
         </script>
     </head>
     <body>
@@ -58,7 +63,7 @@
 
 <!--             <div class="space"></div> -->
             <div class="footer">
-                <strong>repo-view</strong>: created with ❤️ by <a href="https://www.linkedin.com/in/ibrahem-essam-eldeen-abbas-95492a218"  target="_blank">Ibrahem Essam</a>
+                <strong><a href="https://github.com/ibrahemesam/repo-view" target="_blank">repo-view</a></strong>: created with ❤️ by <a href="https://www.linkedin.com/in/ibrahem-essam-eldeen-abbas-95492a218"  target="_blank">Ibrahem Essam</a>
                 <span> — inspired by: </span>
                 <a href="https://gitfront.io" target="_blank">GitFront</a>
             </div>

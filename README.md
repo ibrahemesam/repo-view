@@ -93,8 +93,7 @@ this demo repo is <a href="https://github.com/ibrahemesam/repo-view-demo">a priv
 <hr>
 <h1 align="center" style="margin: auto;">feel free to report any bug through issues section</h1>
 <hr>
-<pre>
-<h1>LICENSE :-</h1>
+<pre><h1>LICENSE :-</h1>
 This project is provided "AS IS" with absolutely "NO WARRANTY".
 If you gonna use its code somewhere: make a clear credit refering to <a href="https://github.com/ibrahemesam/repo-view" target="_blank">this repo-view repository</a>.
 </pre>

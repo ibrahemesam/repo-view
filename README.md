@@ -94,7 +94,7 @@ this demo repo is <a href="https://github.com/ibrahemesam/repo-view-demo">a priv
 </pre>
 <hr>
 <h1 align="center" style="margin: auto;">feel free to report any bug through issues section</h1>
-<pre>if you like this project, give it a Star ⭐</pre>
+<pre align=center>if you like this project, give it a Star ⭐</pre>
 <hr>
 <h1>LICENSE :-</h1>
 <pre>

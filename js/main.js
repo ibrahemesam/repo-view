@@ -69,7 +69,9 @@ const
     cwdNameDiv = document.getElementById('cwd-name-div'),
     locationDiv = document.getElementById('location-div'),
     treeHeaderLast = document.querySelector('.tree > .header > .last'),
-    noInternetDiv = document.getElementById("no-internet-div");
+    noInternetDiv = document.getElementById("no-internet-div"),
+    footerDiv = document.querySelector('div.footer'),
+    mainLoaderSpinnerDiv = document.getElementById('main-loader-spinner-div');
 
 var onlineLock = {};
 onlineLock.lock = () => {onlineLock.p = new Promise(r => onlineLock.unlock = r)}
@@ -143,7 +145,7 @@ async function gotoPath(path, boolUpdateHistory=true, disableAels=true) {
         if (err.response.status === 404) {
             // if path is invalid or repo is invalid => panic:-
             // owner, repo or path is invalid => panic
-            alert('[404]: owner, repo or path is invalid')
+            showErrorMsg('[404]: owner, repo or path is invalid')
             return;
         }
     }
@@ -336,26 +338,46 @@ class TreeItem extends HTMLElement {
 }
 customElements.define("tree-item", TreeItem);
 
+function showErrorMsg(msg) {
+    mainLoaderSpinnerDiv.hidden = true;
+    mainLoaderSpinnerDiv.innerHTML = msg;
+    mainLoaderSpinnerDiv.style.zoom = 2;
+    mainLoaderSpinnerDiv.style.height = 'fit-content';
+    mainLoaderSpinnerDiv.style.width = 'fit-content';
+    mainLoaderSpinnerDiv.style.textAlign = 'center';
+    mainLoaderSpinnerDiv.style.top = '40%';
+    mainLoaderSpinnerDiv.style.border = 'solid 1px crimson'
+    mainLoaderSpinnerDiv.style.padding = '5px'
+    mainLoaderSpinnerDiv.style.borderRadius = '5px';
+    footerDiv.style.top = '30%';
+    mainLoaderSpinnerDiv.hidden = false;
+}
 
 (async () => {
     var urlParams = new URLSearchParams(document.location.search);
     window.repo = urlParams.get('repo');
     if (!repo) {
         // no repo-name is supplied => panic
-        alert('no repo name is supplied in url params')
+        showErrorMsg('no repo name is supplied in url params')
         return;
     }
     window.token = urlParams.get('token');
     if (!token) {
         // no token is supplied => panic
-        alert('no token is supplied in url params')
+        showErrorMsg('no token is supplied in url params')
         return;
     }
-    if (JSON.parse(urlParams.get('token_ready'))) {
+    if (JSON.parse(urlParams.get('token_ready') || token.startsWith('github_') || token.startsWith('ghp_'))) {
         window.tokenUrlParam = `${token}&token_ready=true`;
     } else {
         window.tokenUrlParam = token;
-        token = atob(token);
+        try {
+            token = atob(token);
+        } catch {
+            // token is not valid: panic
+            showErrorMsg("can't decode Github access token")
+            return;
+        }
     }
     window.octokit = new Octokit({ auth: token });
 
@@ -381,7 +403,7 @@ customElements.define("tree-item", TreeItem);
     } catch (err) {
         if (err.response.status === 401) {
             // token is not valid: panic
-            alert('Github access token is NOT valid')
+            showErrorMsg('Github access token is NOT valid')
             return;
         }
     }

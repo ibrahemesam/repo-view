@@ -2,7 +2,7 @@
 <p align="center">
   <img src="https://github.com/ibrahemesam/repo-view/blob/main/asset/favicon.svg?raw=true" width="30%"/>
 </p>
-— lets employers see your private GitHub repositories in your CV
+— lets employers see your private GitHub repositories in your CV (with your permission of course)
 <hr>
 <h1>Overview :-</h1>
 <pre>

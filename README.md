@@ -2,7 +2,8 @@
 <p align="center">
   <img src="https://github.com/ibrahemesam/repo-view/blob/main/asset/favicon.svg?raw=true" width="30%"/>
 </p>
-— lets employers see your private GitHub repositories in your CV (with your permission of course)
+— It is a static web page that uses Github REST API to preview repos.<br>
+  It lets employers see your private GitHub repositories in your CV (with your permission of course) without making them public 💵↗️↗️
 <hr>
 <h1>Overview :-</h1>
 <pre>

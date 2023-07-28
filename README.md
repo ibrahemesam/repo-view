@@ -48,13 +48,13 @@ it is a static web page. so, configuration is gonna be passed as url params.
     warning: use only tokens with only permissions: repos read-only<br>
 <strong>repo</strong> : string => the repo name on github<br>
 <strong>owner</strong> : string => the repo owner username (or organization username) on github
-                  if omitted, it would be fetched from githun (the username who created the access_token).
+                  if omitted, it would be fetched from Github (the username who created the access_token).
                               so, if that username is not the owner of the repo, you gonna get ERROR 404<br>
 <strong>token_ready</strong> : bool => it is optional: default is "false" =>
     if true: provide token param is gonna be used as is
     else:
         the provided token param must be provied as encodes base64 string using js "btoa" method
-        it first will be decoded back before ( using js "atob" method )
+        it first will be decoded back ( using js "atob" method )
         why?
             - the token does not exist readily on url:
                 if any web scrapper found the url and got the token and tried it on their terminal:
@@ -76,7 +76,7 @@ this demo repo is <a href="https://github.com/ibrahemesam/repo-view-demo">a priv
 <pre>
 <strong style="color: red;">!! Warning !!</strong>: any one with the url can preview and clone the repo
     so, put it only on your CV and send it only to employers
-        do NOT put it on places where it may be stolen eg: https://<your_username>.github.io
+        do NOT put it on places where it may be stolen eg: https://&lt;your_username&gt;.github.io
             or the production business website of the private repo
 </pre>
 <h1>To create a token :-</h1>

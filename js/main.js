@@ -426,8 +426,9 @@ function showErrorMsg(msg) {
 
 
 window.addEventListener('popstate', function(event) {
-  gotoPath(
-    (new URLSearchParams(document.location.search)).get('path'),
-    false
-  );
+    var previousPath = (new URLSearchParams(document.location.search)).get('path')
+    gotoPath(
+        previousPath ? previousPath : '',
+        false
+    );
 });

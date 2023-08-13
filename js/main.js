@@ -426,7 +426,7 @@ function showErrorMsg(msg) {
 
 
 window.addEventListener('popstate', function(event) {
-    var previousPath = (new URLSearchParams(document.location.search)).get('path')
+    var previousPath = (new URLSearchParams(document.location.search)).get('path');
     gotoPath(
         previousPath ? previousPath : '',
         false

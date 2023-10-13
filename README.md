@@ -70,7 +70,7 @@ it is a static web page. so, configuration is gonna be passed as url params.
 <h1><a href="https://ibrahemesam.github.io/repo-view/?token=Z2l0aHViX3BhdF8xMUFLUEZNNEkwNDRGTVRwc3JWTEhyX09ZdzBvTXZDZ3JRZ2NTZlhIeGR0bjRpVnhTYVlaVVRFZThyQklvcnBmQjJYUFFSTVlLWWpYWTVWZ05Y&owner=ibrahemesam&repo=repo-view-demo" target="_blank">DEMO</a> :-</h1>
 <pre>
 this demo repo is <a href="https://github.com/ibrahemesam/repo-view-demo">a private github repository</a>. if you visit it, you get 404 because it is <strong>Private</strong>.
-NB: this DEMO url EXPIRES on Sun, Oct 13 2024. (this expiration is related to GitHub fine-gained token settings)
+NB: this DEMO url EXPIRES on Sun, Oct 13 2024. (this expiration is related to GitHub's fine-gained token settings)
 </pre>
 <pre><strong>NB: </strong> public repos can also be viewed</pre>
 <hr>

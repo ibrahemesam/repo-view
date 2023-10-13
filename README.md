@@ -67,7 +67,7 @@ it is a static web page. so, configuration is gonna be passed as url params.
                     so, they wont get too excited about that token.<br>
 <strong>so, </strong>the url would be: https://ibrahemesam.github.io/repo-view/?token=&lt;token&gt;&repo=&lt;repo-name&gt;&owner=&lt;owner-username&gt;
 </pre>
-<h1><a href="https://ibrahemesam.github.io/repo-view/?token=Z2l0aHViX3BhdF8xMUFLUEZNNEkwNDRGTVRwc3JWTEhyX09ZdzBvTXZDZ3JRZ2NTZlhIeGR0bjRpVnhTYVlaVVRFZThyQklvcnBmQjJYUFFSTVlLWWpYWTVWZ05Y&owner=ibrahemesam&repo=repo-view-demo" target="_blank">DEMO</a> :-</h1>
+<h1><a href="https://ibrahemesam.github.io/repo-view/?token=Z2l0aHViX3BhdF8xMUFLUEZNNEkwMEV0NHNlcFJ6NVlUX05tY2dUQ0dzU0lVc1p3MDV0NHAyUHNsTk5adGl5R3VDdWFNRHJDVDM2UUlDTlRIQk4yM1dZN0ljOXMw&owner=ibrahemesam&repo=repo-view-demo" target="_blank">DEMO</a> :-</h1>
 <pre>
 this demo repo is <a href="https://github.com/ibrahemesam/repo-view-demo">a private github repository</a>. if you visit it, you get 404 because it is <strong>Private</strong>.
 NB: this DEMO url EXPIRES on Sun, Oct 13 2024. (this expiration is related to GitHub's fine-gained token settings)

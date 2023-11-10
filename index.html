@@ -19,9 +19,11 @@
         <script type="text/javascript">
             // setup darkTheme before anything
             (async () => {
-                var useDarkThemeCookie = await cookieStore.get('useDarkTheme');
+                var useDarkThemeCookie = await localStorage.getItem('useDarkTheme');
                 if (useDarkThemeCookie) {
-                    window.useDarkTheme = JSON.parse(useDarkThemeCookie.value);
+                    window.useDarkTheme = useDarkThemeCookie
+                    ? JSON.parse(useDarkThemeCookie)
+                    : useDarkThemeCookie;
                 } else {
                     if (window.matchMedia) {
                         if (window.matchMedia('(prefers-color-scheme: dark)').matches) {

@@ -13,11 +13,11 @@ switchBtn.addEventListener("click", async () => {
     if(toggle){
         animate.restart();
         darkreader.enable();
-        cookieStore.set('useDarkTheme', true)
+        localStorage.setItem('useDarkTheme', true)
     } else {
         animate.reverse();
         darkreader.disable();
-        cookieStore.set('useDarkTheme', false)
+        localStorage.setItem('useDarkTheme', false)
     }
     toggle = !toggle;
 });
@@ -48,4 +48,3 @@ if (window.useDarkTheme) {
     })).observe(targetNode, { attributes: true });
 })();
 
-// <!--  TODO: save dark theme cfg in cookies  -->

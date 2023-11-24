@@ -1,4 +1,4 @@
-<h1 align="center">~: repo-view :~</h1>
+1<h1 align="center">~: repo-view :~</h1>
 <p align="center">
   <img src="https://github.com/ibrahemesam/repo-view/blob/main/asset/favicon.svg?raw=true" width="30%"/>
 </p>

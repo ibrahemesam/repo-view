@@ -103,3 +103,6 @@ NB: this DEMO url EXPIRES on 17 Jan 2024. (this expiration is related to GitHub'
 This project is provided "AS IS" with absolutely "NO WARRANTY".
 If you gonna use its source-code somewhere: make a clear credit refering to <a href="https://github.com/ibrahemesam/repo-view" target="_blank">this repo-view repository</a>.
 </pre>
+<pre>
+  - [ ] FIXME: when putting the CV in github.io page, github detects btoa-encoded token and think it exists by mistake as a vulnerability so token and URLs are immediately disabled. so => change encoding to something that github can't detect. also, mintain backward compatibility
+</pre>

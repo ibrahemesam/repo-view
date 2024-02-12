@@ -44,7 +44,7 @@ import { Mime } from 'https://unpkg.com/mime@latest/dist/src/index_lite.js';
 import stdMimeTypes from "https://unpkg.com/mime@latest/dist/types/standard.js";
 import otherMimeTypes from "https://unpkg.com/mime@latest/dist/types/other.js";
 const mime = new Mime(stdMimeTypes, otherMimeTypes);
-mime.define({"application/python": ["py"]})
+mime.define({"application/python": ["py"]}, true)
 
 marked.setOptions({
   highlight: (code, lang) => {

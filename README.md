@@ -108,5 +108,6 @@ If you gonna use its source-code somewhere: make a clear credit refering to <a h
     - [x] implement encryption functions
     - [x] maintain backward compatibility
     - [ ] create a UI util to create uniform URL
+            path: /?new=true
     - [ ] update README to use UI util instead of manual URL creation
 

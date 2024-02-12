@@ -38,26 +38,6 @@ function addBtnClone() {
     treeHeaderLast.append(clone)
 }
 
-import { Octokit } from "https://esm.sh/@octokit/core";
-
-import { Mime } from 'https://unpkg.com/mime@latest/dist/src/index_lite.js';
-import stdMimeTypes from "https://unpkg.com/mime@latest/dist/types/standard.js";
-import otherMimeTypes from "https://unpkg.com/mime@latest/dist/types/other.js";
-import programmingTypes from "./programming-txt-mime.js";
-const mime = new Mime(stdMimeTypes, otherMimeTypes, programmingTypes);
-
-marked.setOptions({
-  highlight: (code, lang) => {
-    if (Prism.languages[lang]) {
-      return Prism.highlight(code, Prism.languages[lang], lang);
-    } else {
-      return code;
-    }
-  },
-  pedantic: false,
-  gfm: true,
-});
-
 const DEFAULT_API_HEADERS = { headers: {
     'X-GitHub-Api-Version': '2022-11-28',
     'Accept-Charset': 'UTF-8'
@@ -110,7 +90,6 @@ function decodeContent(str) {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
 }
-
 
 function updateHistory(path) {
     history.pushState('', '',
@@ -387,8 +366,32 @@ function decryptToken(token) {
     return decrypt('', token.slice(0, token.lastIndexOf('_enc')));
 }
 /* ------------------------------------------ */
-(async () => {
-    var urlParams = new URLSearchParams(document.location.search);
+async function mainLoop() {
+    const urlParams = new URLSearchParams(document.location.search);
+    if (urlParams.get('new'))
+    {
+        // handleNewUrlCreation
+        alert('create new url');
+        return;
+    }
+    window.Octokit = (await import("https://esm.sh/@octokit/core")).Octokit;
+    window.Mime = (await import("https://unpkg.com/mime@latest/dist/src/index_lite.js")).Mime;
+    window.stdMimeTypes = (await import("https://unpkg.com/mime@latest/dist/types/standard.js")).default;
+    window.otherMimeTypes = (await import("https://unpkg.com/mime@latest/dist/types/other.js")).default;
+    window.programmingTypes = (await import("./programming-txt-mime.js")).default;
+    const mime = new Mime(stdMimeTypes, otherMimeTypes, programmingTypes);
+
+    marked.setOptions({
+    highlight: (code, lang) => {
+        if (Prism.languages[lang]) {
+        return Prism.highlight(code, Prism.languages[lang], lang);
+        } else {
+        return code;
+        }
+    },
+    pedantic: false,
+    gfm: true,
+    });
     window.repo = urlParams.get('repo');
     if (!repo) {
         // no repo-name is supplied => panic
@@ -458,9 +461,7 @@ function decryptToken(token) {
 
     // get required path
     await gotoPath(path, false, false);
-})();
-
-
+}
 
 window.addEventListener('popstate', function(event) {
     var previousPath = (new URLSearchParams(document.location.search)).get('path');
@@ -469,3 +470,6 @@ window.addEventListener('popstate', function(event) {
         false
     );
 });
+
+
+mainLoop();

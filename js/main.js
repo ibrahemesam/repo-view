@@ -356,7 +356,37 @@ function showErrorMsg(msg) {
     footerDiv.style.top = '30%';
     mainLoaderSpinnerDiv.hidden = false;
 }
-
+/* ~: js encryption by MetaTron@stackoverflow :~ */
+/* https://stackoverflow.com/a/66938952/10701585 */
+const crypt = (salt, text) => {
+  const textToChars = (text) => text.split("").map((c) => c.charCodeAt(0));
+  const byteHex = (n) => ("0" + Number(n).toString(16)).substr(-2);
+  const applySaltToChar = (code) => textToChars(salt).reduce((a, b) => a ^ b, code);
+  return text
+    .split("")
+    .map(textToChars)
+    .map(applySaltToChar)
+    .map(byteHex)
+    .join("");
+};
+const decrypt = (salt, encoded) => {
+  const textToChars = (text) => text.split("").map((c) => c.charCodeAt(0));
+  const applySaltToChar = (code) => textToChars(salt).reduce((a, b) => a ^ b, code);
+  return encoded
+    .match(/.{1,2}/g)
+    .map((hex) => parseInt(hex, 16))
+    .map(applySaltToChar)
+    .map((charCode) => String.fromCharCode(charCode))
+    .join("");
+};
+/* ------------------------------------------ */
+function encryptToken(token) {
+    return crypt('', token) + '_enc';
+}
+function decryptToken(token) {
+    return decrypt('', token.slice(0, token.lastIndexOf('_enc')));
+}
+/* ------------------------------------------ */
 (async () => {
     var urlParams = new URLSearchParams(document.location.search);
     window.repo = urlParams.get('repo');
@@ -376,7 +406,10 @@ function showErrorMsg(msg) {
     } else {
         window.tokenUrlParam = token;
         try {
-            token = atob(token);
+            if (token.endsWith('_enc'))
+                token = decryptToken(token);
+            else
+                token = atob(token);
         } catch {
             // token is not valid: panic
             showErrorMsg("can't decode Github access token")

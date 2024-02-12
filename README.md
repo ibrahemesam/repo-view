@@ -67,10 +67,10 @@ it is a static web page. so, configuration is gonna be passed as url params.
                     so, they wont get too excited about that token.<br>
 <strong>so, </strong>the url would be: https://ibrahemesam.github.io/repo-view/?token=&lt;token&gt;&repo=&lt;repo-name&gt;&owner=&lt;owner-username&gt;
 </pre>
-<h1><a href="https://bit.ly/repo-view-demo-till-jan-2024" target="_blank">DEMO</a> :-</h1>
+<h1><a href="https://bit.ly/repo-view-demo-till-may-2024" target="_blank">DEMO</a> :-</h1>
 <pre>
 this demo repo is <a href="https://github.com/ibrahemesam/repo-view-demo">a private github repository</a>. if you visit it, you get 404 because it is <strong>Private</strong>.
-NB: this DEMO url EXPIRES on 17 Jan 2024. (this expiration is related to GitHub's fine-gained token settings)
+NB: this DEMO url EXPIRES on 12 May 2024. (this expiration is related to GitHub's fine-gained token settings)
 </pre>
 <pre><strong>NB: </strong> public repos can also be viewed</pre>
 <hr>

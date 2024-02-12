@@ -39,8 +39,12 @@ function addBtnClone() {
 }
 
 import { Octokit } from "https://esm.sh/@octokit/core";
-import mime from "https://cdn.skypack.dev/mime/lite";
-mime._types.py = 'application/python'
+
+import { Mime } from 'https://unpkg.com/mime@latest/dist/src/index_lite.js';
+import stdMimeTypes from "https://unpkg.com/mime@latest/dist/types/standard.js";
+import otherMimeTypes from "https://unpkg.com/mime@latest/dist/types/other.js";
+const mime = new Mime(stdMimeTypes, otherMimeTypes);
+mime.define({"application/python": ["py"]})
 
 marked.setOptions({
   highlight: (code, lang) => {

@@ -108,11 +108,8 @@ body:has(ul.tree[hidden]):has(#preview-div[hidden]):has(.container div.location[
     transform: translateX(-50%);
     margin: auto;
     padding: 10px;
-    border: solid;
     outline: none;
     user-select: none;
-    border-radius: 5px;
-    border-color: cornflowerblue;
     height: fit-content;
     width: max-content;
 }
@@ -160,4 +157,16 @@ div#no-internet-div {
     padding: 8px;
     font-weight: bold;
     text-indent: 35px;
+}
+
+.footer > .made-with-love {
+    border: solid;
+    border-radius: 5px;
+    border-color: cornflowerblue;
+    outline: inherit;
+    user-select: inherit;
+    width: fit-content;
+    margin: auto;
+    margin-top: 2rem;
+    padding: 5px;
 }

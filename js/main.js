@@ -43,8 +43,8 @@ import { Octokit } from "https://esm.sh/@octokit/core";
 import { Mime } from 'https://unpkg.com/mime@latest/dist/src/index_lite.js';
 import stdMimeTypes from "https://unpkg.com/mime@latest/dist/types/standard.js";
 import otherMimeTypes from "https://unpkg.com/mime@latest/dist/types/other.js";
-const mime = new Mime(stdMimeTypes, otherMimeTypes);
-mime.define({"application/python": ["py"]}, true)
+import programmingTypes from "./programming-txt-mime.js";
+const mime = new Mime(stdMimeTypes, otherMimeTypes, programmingTypes);
 
 marked.setOptions({
   highlight: (code, lang) => {

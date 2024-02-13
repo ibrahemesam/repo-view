@@ -465,7 +465,7 @@ async function mainLoop() {
     window.stdMimeTypes = (await importModule("https://unpkg.com/mime@latest/dist/types/standard.js")).default;
     window.otherMimeTypes = (await importModule("https://unpkg.com/mime@latest/dist/types/other.js")).default;
     window.programmingTypes = (await importModule("./programming-txt-mime.js")).default;
-    const mime = new Mime(stdMimeTypes, otherMimeTypes, programmingTypes);
+    window.mime = new Mime(stdMimeTypes, otherMimeTypes, programmingTypes);
 
     marked.setOptions({
     highlight: (code, lang) => {

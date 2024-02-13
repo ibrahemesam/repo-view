@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="../asset/favicon.svg">
+    <title>RepoView</title>
+    <script>
+        // redirect to 'https://<app-url>/?new'
+        if ((['/new', '/new/']).includes(document.location.pathname))
+        {
+            document.location.href = document.location.origin + '/?new';
+        }
+        else
+        {
+            var pathname = document.location.pathname;
+            if (pathname.endsWith('/'))
+                pathname = pathname.slice(0, -1);
+            pathname = pathname.slice(0, pathname.lastIndexOf('/new'));
+            document.location.href = document.location.origin +
+                pathname + '/?new';
+        }
+    </script>
+  </head>
+  <body>
+  </body>
+</html>

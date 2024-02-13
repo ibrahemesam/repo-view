@@ -29,7 +29,7 @@ there is a website called <a href="https://gitfront.io" target="_blank">GitFront
 - your GitFront repo does not get directly synchronized with GitHub
 </pre>
 <pre>
-my <a href="#">repo-view</a> do exactly the same except that:
+my <a href="#">repo-view</a> does exactly the same except that:
 - it is a static web page (no backend) -> your code exists only on GitHub. it does not goto any 3rd party server
 - it uses official GitHub REST API, it gets files directly from GitHub
 - no problem if repo is larger than 100 MB. you still can preview it

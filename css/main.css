@@ -198,7 +198,7 @@ body:has(.create-url:not([hidden])) div.footer > div {
 }
 
 .create-url {
-    width: 400px;
+    width: 90vw;
     background-color: rgba(0, 0, 0, 0.2);
     position: relative;
     margin: auto;
@@ -215,14 +215,14 @@ body:has(.create-url:not([hidden])) div.footer > div {
 }
 .create-url * {
     font-family: 'Poppins',sans-serif;
-    color: #ffffff;
+/*     color: #ffffff; */
     letter-spacing: 0.5px;
     outline: none;
     border: none;
 }
 .create-url h3 {
-    font-size: 32px;
-    font-weight: 500;
+    font-size: xx-large;
+    font-weight: bolder;
     line-height: 25px;
     text-align: center;
 }
@@ -243,13 +243,14 @@ body:has(.create-url:not([hidden])) div.footer > div {
 .create-url .input-field > input {
     height: inherit;
     flex-grow: 1;
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(255,255,255,0.65);
     border-radius: 3px;
 /*     padding: 0 10px; */
     font-size: 14px;
     font-weight: 300;
     text-align: center;
     text-overflow: ellipsis;
+    padding-left: 10px;
 }
 .create-url .input-field > button {
     background-image: url("../asset/paste.svg");

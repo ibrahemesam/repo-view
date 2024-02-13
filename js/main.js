@@ -173,6 +173,8 @@ async function gotoPath(path, boolUpdateHistory=true, disableAels=true) {
                 previewItemContentDiv.innerHTML = '';
                 previewDiv.hidden = false;
                 previewItemNameDiv.innerHTML = response.data.name;
+                // set Raw url
+                rawBtn.setAttribute('href', response.data.download_url);
                 initMarkdownView(decodeContent(response.data.content));
             } catch ( err ) {
                 if (err.response.status === 404 || err.status === 404) {

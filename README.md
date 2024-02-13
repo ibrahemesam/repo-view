@@ -41,6 +41,8 @@ my <a href="#">repo-view</a> do exactly the same except that:
 </p>
 <hr>
 <h1>Usage :-</h1>
+<details>
+<summary>Manual Usage [deprecated]</summary>
 <pre>
 it is a static web page. so, configuration is gonna be passed as url params.
 <h2>params :-</h2>
@@ -66,6 +68,24 @@ it is a static web page. so, configuration is gonna be passed as url params.
                     they gonna find that they can just get the real token from the web page.
                     so, they wont get too excited about that token.<br>
 <strong>so, </strong>the url would be: https://ibrahemesam.github.io/repo-view/?token=&lt;token&gt;&repo=&lt;repo-name&gt;&owner=&lt;owner-username&gt;
+</pre>
+<hr/>
+<h2>New way of usage:-</h2>
+</details>
+<pre>
+<h3>First, go to this page 👉 <a href="https://ibrahemesam.github.io/repo-view/?new">Create repo-view URL</a></h3>
+<strong>Then,           👇👇👇👇👇</strong>
+<p align="center">
+  <img src="https://github.com/ibrahemesam/repo-view/blob/main/asset/usage.png?raw=true" width="80%"/>
+</p>
+</pre>
+<pre>
+<strong>NB:</strong>
+The resulting repo-view url has its token as encrypted string.
+- Why being encrypted?
+= Because when putting the url in a github.io page (or anywhere on Github),
+  if the token is not encrypted, Github detects it and think it exists by mistake as a vulnerability.
+  So, Github immediately disables the token, and the repo-view url is disabled as well.
 </pre>
 <h1><a href="https://ibrahemesam.github.io/repo-view/?token=6769746875625f7061745f3131414b50464d344930735975314e7250706b7177415f3342516c5330436e5172536c324f6364694b47396e3368474b46534f53304f3470785a51687a45434f6f7151574d4532374341567a747745304a49_enc&owner=ibrahemesam&repo=repo-view-demo" target="_blank">DEMO</a> :-</h1>
 <pre>
@@ -103,11 +123,3 @@ NB: this DEMO url EXPIRES on 12 May 2024. (this expiration is related to GitHub'
 This project is provided "AS IS" with absolutely "NO WARRANTY".
 If you gonna use its source-code somewhere: make a clear credit refering to <a href="https://github.com/ibrahemesam/repo-view" target="_blank">this repo-view repository</a>.
 </pre>
-
-- [-] FIXME: when putting the CV in github.io page, github detects btoa-encoded token and think it exists by mistake as a vulnerability so token and URLs are immediately disabled. so => change encoding to something that github can't detect. also, mintain backward compatibility
-    - [x] implement encryption functions
-    - [x] maintain backward compatibility
-    - [x] create a UI util to create uniform URL
-            path: /?new
-    - [ ] update README to use UI util instead of manual URL creation
-

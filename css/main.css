@@ -95,7 +95,8 @@ body:has(ul.tree[hidden]) div.footer
     transform: translate(-50%, -100%);
 }
 body:has(ul.tree:not([hidden])) div#main-loader-spinner-div,
-body:has(#preview-div:not([hidden])) div#main-loader-spinner-div
+body:has(#preview-div:not([hidden])) div#main-loader-spinner-div,
+body:has(.create-url:not([hidden])) div#main-loader-spinner-div
 {
     display: none;
 }
@@ -169,4 +170,142 @@ div#no-internet-div {
     margin: auto;
     margin-top: 2rem;
     padding: 5px;
+}
+
+body:has(.create-url:not([hidden])) div.footer
+{
+    position: relative !important;
+    margin: auto !important;
+    padding: 10px !important;
+    outline: none !important;
+    user-select: none !important;
+    height: fit-content !important;
+    width: max-content !important;
+    bottom: 0 !important;
+    top: 0 !important;
+    transform: initial !important;
+    left: 0 !important;
+}
+
+body:has(.create-url:not([hidden])) div.footer > div {
+    margin-top: 5px;
+}
+
+.create-url {
+    width: 400px;
+    background-color: rgba(0, 0, 0, 0.2);
+    position: relative;
+    margin: auto;
+    margin-top: 2rem;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    padding: 50px 35px;
+    padding-top: 0;
+    padding-bottom: 70px;
+    bottom: 0;
+    user-select: none;
+}
+.create-url * {
+    font-family: 'Poppins',sans-serif;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    outline: none;
+    border: none;
+}
+.create-url h3 {
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 25px;
+    text-align: center;
+}
+
+.create-url label {
+    display: block;
+    margin-top: 30px;
+    font-size: 16px;
+    font-weight: 500;
+}
+.create-url .input-field {
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+    overflow: hidden;
+    border-radius: 5px;
+}
+.create-url .input-field > input {
+    height: inherit;
+    flex-grow: 1;
+    background-color: rgba(255,255,255,0.5);
+    border-radius: 3px;
+/*     padding: 0 10px; */
+    font-size: 14px;
+    font-weight: 300;
+    text-align: center;
+    text-overflow: ellipsis;
+}
+.create-url .input-field > button {
+    background-image: url("../asset/paste.svg");
+    background-size: 90% 90%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 40px;
+    cursor: pointer;
+}
+.create-url input::placeholder {
+    color: gray;
+    font-weight: bold;
+    text-align: center;
+}
+.create-url input#token {
+    font-size: x-small;
+    font-weight: 200;
+}
+.create-url > button {
+    margin-top: 20px;
+    width: 100%;
+    background-color: #ffffff;
+    color: #080710;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+    left: 5px;
+}
+.create-url .created-url {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    width: calc(100% - 2 * 20px);
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+}
+.create-url .created-url > a {
+    flex-grow: 1;
+    border: inherit;
+    border-top-left-radius: inherit;
+    border-bottom-left-radius: inherit;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    user-select: initial;
+    font-size: xx-small;
+    padding: 4px;
+    line-height: 10px;
+}
+.create-url .created-url > button {
+    width: 80px;
+    border: inherit;
+    border-top-right-radius: inherit;
+    border-bottom-right-radius: inherit;
+    color: #080710;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
 }

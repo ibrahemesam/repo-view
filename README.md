@@ -107,7 +107,7 @@ If you gonna use its source-code somewhere: make a clear credit refering to <a h
 - [-] FIXME: when putting the CV in github.io page, github detects btoa-encoded token and think it exists by mistake as a vulnerability so token and URLs are immediately disabled. so => change encoding to something that github can't detect. also, mintain backward compatibility
     - [x] implement encryption functions
     - [x] maintain backward compatibility
-    - [ ] create a UI util to create uniform URL
-            path: /?new=true
+    - [x] create a UI util to create uniform URL
+            path: /?new
     - [ ] update README to use UI util instead of manual URL creation
 

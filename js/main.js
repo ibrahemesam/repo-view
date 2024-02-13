@@ -55,7 +55,13 @@ const
     treeHeaderLast = document.querySelector('.tree > .header > .last'),
     noInternetDiv = document.getElementById("no-internet-div"),
     footerDiv = document.querySelector('div.footer'),
-    mainLoaderSpinnerDiv = document.getElementById('main-loader-spinner-div');
+    mainLoaderSpinnerDiv = document.getElementById('main-loader-spinner-div'),
+    createUrlDiv = document.getElementById("create-url"),
+    aCreatedUrl = document.querySelector("#created-url > a"),
+    btnCopyCreatedUrl = document.querySelector('button[name="btn-copy-created-url"]'),
+    inpToken = document.getElementById('token'),
+    inpUsername = document.getElementById('owner'),
+    inpRepo = document.getElementById('repo');
 
 var onlineLock = {};
 onlineLock.lock = () => {onlineLock.p = new Promise(r => onlineLock.unlock = r)}
@@ -366,19 +372,99 @@ function decryptToken(token) {
     return decrypt('', token.slice(0, token.lastIndexOf('_enc')));
 }
 /* ------------------------------------------ */
+function copyTextToClipboard(text) {
+  // Create a temporary textarea element to hold the text
+  const tempElement = document.createElement('textarea');
+  tempElement.value = text;
+  tempElement.style.position = 'fixed'; // Prevent scrolling to bottom of page in MS Edge.
+  document.body.appendChild(tempElement);
+  // Select the text inside the textarea
+  tempElement.select();
+  // Copy the selected text to the clipboard
+  let successful = false;
+  try {
+    successful = document.execCommand('copy');
+  } catch (err) {
+    console.error('Failed to copy text: ', err);
+  }
+  // Remove the temporary textarea element
+  document.body.removeChild(tempElement);
+  return successful;
+}
+async function importModule(module) {
+    /* try importing a module forever until done */
+    while (true) {
+        try {
+            return (await import(module));
+        } catch (err) {
+            console.error(err)
+        }
+    }
+}
 async function mainLoop() {
-    const urlParams = new URLSearchParams(document.location.search);
-    if (urlParams.get('new'))
+    if (document.location.search === "?new")
     {
         // handleNewUrlCreation
-        alert('create new url');
+        createUrlDiv.hidden = false;
+        document.addEventListener('click', async (evt)=>{
+            var el = evt.target;
+            switch (el.getAttribute('name')) {
+                case "btn-inp-paste":
+                    evt.preventDefault();
+                     try {
+                        var clipboardText = await navigator.clipboard.readText();
+                        var inputElement = document.querySelector(el.getAttribute("target"));
+                        inputElement.value = clipboardText;
+                    } catch (err) {
+                        console.error(err);
+                    }
+                    break;
+                case "btn-copy-created-url":
+                    evt.preventDefault();
+                    var txt = aCreatedUrl.getAttribute('href');
+                    if (txt === '')
+                        break;
+                    var success = copyTextToClipboard(txt);
+                    var btnCopyCreatedUrlText = btnCopyCreatedUrl.innerText;
+                    if (success)
+                        btnCopyCreatedUrl.innerText = "Copied";
+                    else
+                        btnCopyCreatedUrl.innerText = "Can't copy";
+                    setTimeout(()=>{
+                        btnCopyCreatedUrl.innerText = btnCopyCreatedUrlText;
+                    }, 1000);
+                    break;
+                case "btn-create-url":
+                    evt.preventDefault();
+                    var btnText = el.innerText;
+                    var url = document.location.origin +
+                        document.location.pathname +
+                        (document.location.pathname !== '/' ? '/' : '')  +
+                        `?token=${
+                            encryptToken(inpToken.value.trim())
+                        }&owner=${
+                            inpUsername.value.trim()
+                        }&repo=${
+                            inpRepo.value.trim()
+                        }`;
+                    aCreatedUrl.setAttribute('href', url);
+                    aCreatedUrl.innerText = url;
+                    el.innerText = 'Created';
+                    setTimeout(()=>{
+                        el.innerText = btnText;
+                    }, 1000);
+                    break;
+                default:
+                    break;
+            }
+        });
         return;
     }
-    window.Octokit = (await import("https://esm.sh/@octokit/core")).Octokit;
-    window.Mime = (await import("https://unpkg.com/mime@latest/dist/src/index_lite.js")).Mime;
-    window.stdMimeTypes = (await import("https://unpkg.com/mime@latest/dist/types/standard.js")).default;
-    window.otherMimeTypes = (await import("https://unpkg.com/mime@latest/dist/types/other.js")).default;
-    window.programmingTypes = (await import("./programming-txt-mime.js")).default;
+    window.Octokit = (await importModule("https://esm.sh/@octokit/core")).Octokit;
+    window.Mime = (await importModule("https://unpkg.com/mime@latest/dist/src/index_lite.js")).Mime;
+    window.stdMimeTypes = (await importModule("https://unpkg.com/mime@latest/dist/types/standard.js")).default;
+    window.otherMimeTypes = (await importModule("https://unpkg.com/mime@latest/dist/types/other.js")).default;
+    window.programmingTypes = (await importModule("./programming-txt-mime.js")).default;
     const mime = new Mime(stdMimeTypes, otherMimeTypes, programmingTypes);
 
     marked.setOptions({
@@ -392,6 +478,7 @@ async function mainLoop() {
     pedantic: false,
     gfm: true,
     });
+    const urlParams = new URLSearchParams(document.location.search);
     window.repo = urlParams.get('repo');
     if (!repo) {
         // no repo-name is supplied => panic

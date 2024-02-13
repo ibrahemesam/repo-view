@@ -10,6 +10,10 @@ body {
     overflow: auto;
 }
 
+.container {
+    height: 100vh !important;
+}
+
 img.file {
     content: url('../asset/file.svg');
 }
@@ -76,14 +80,16 @@ body:has(ul.tree[hidden]) .blob-view .content {
 }
 
 div.footer {
-    transform: translateY(-50%);
+    position: fixed;
+    bottom: 2px;
 }
 
-body:has(#preview-div[hidden]) div.footer,
-body:has(ul.tree[hidden]) div.footer
+body:has(#preview-div[hidden]) div.footer
+/*body:has(ul.tree[hidden]) div.footer*/
 {
     position: fixed;
-    bottom: 1em;
+    bottom: 8px;
+/*     transform: translateY(-50%); */
 }
 
 

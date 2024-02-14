@@ -1,134 +1,144 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width" />
-        <meta name="robots" content="noindex" />
-        <meta name="robots" content="nonofollow" />
-        <link rel="stylesheet" href="css/prism.css" data-noprefix />
-<!--         <link rel="stylesheet" href="css/prism-line-numbers.css" data-noprefix /> -->
-<!--         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css"> -->
-        <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="css/theme-switch.css">
-        <link rel="stylesheet" href="css/main.css">
-<!--         <meta name="darkreader" content="NO-DARKREADER-PLUGIN" /> -->
-        <script src="js/darkreader.min.js"></script>
-<!--         <script src="js/nodarkreader.min.js"></script> -->
-        <link rel="icon" href="asset/favicon.svg">
-        <title>RepoView</title>
-        <script type="text/javascript">
-            // setup darkTheme before anything
-            (async () => {
-                var useDarkThemeCookie = await localStorage.getItem('useDarkTheme');
-                if (useDarkThemeCookie) {
-                    window.useDarkTheme = useDarkThemeCookie
-                    ? JSON.parse(useDarkThemeCookie)
-                    : useDarkThemeCookie;
-                } else {
-                    if (window.matchMedia) {
-                        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                            useDarkTheme = true;
-                        } else {
-                            useDarkTheme = false;
-                        }
-                    } else {
-                        useDarkTheme = true; // default is dark 🤓
-                    }
-                }
-                useDarkTheme ? darkreader.enable() : darkreader.disable();
-            })();
-        </script>
-    </head>
-    <body>
-        <include-html src="widgets/theme-switch.html"></include-html>
-        <div class="container">
-            <div class="location" id="location-div" hidden>
-            </div>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="robots" content="noindex" />
+    <meta name="robots" content="nonofollow" />
+    <link rel="stylesheet" href="css/prism.css" data-noprefix />
+    <!--         <link rel="stylesheet" href="css/prism-line-numbers.css" data-noprefix /> -->
+    <!--         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css"> -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/theme-switch.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <!--         <meta name="darkreader" content="NO-DARKREADER-PLUGIN" /> -->
+    <script src="js/darkreader.min.js"></script>
+    <!--         <script src="js/nodarkreader.min.js"></script> -->
+    <link rel="icon" href="asset/favicon.svg" />
+    <title>RepoView</title>
+    <script type="text/javascript">
+      // setup darkTheme before anything
+      (async () => {
+        var useDarkThemeCookie = await localStorage.getItem("useDarkTheme");
+        if (useDarkThemeCookie) {
+          window.useDarkTheme = useDarkThemeCookie
+            ? JSON.parse(useDarkThemeCookie)
+            : useDarkThemeCookie;
+        } else {
+          if (window.matchMedia) {
+            if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              useDarkTheme = true;
+            } else {
+              useDarkTheme = false;
+            }
+          } else {
+            useDarkTheme = true; // default is dark 🤓
+          }
+        }
+        useDarkTheme ? darkreader.enable() : darkreader.disable();
+      })();
+    </script>
+  </head>
+  <body>
+    <include-html src="widgets/theme-switch.html"></include-html>
+    <div class="container">
+      <div class="location" id="location-div" hidden></div>
 
-            <ul id="tree-ul" class="tree" hidden>
-                <li class="header">
-                    <div id="cwd-name-div"></div>
-                    <div class="last"></div>
-                </li>
-            </ul>
-            <div class="blob-view" id="preview-div" hidden>
-                <div class="header">
-                    <div id="preview-item-name-div"></div>
-                    <div class="last">
-                        <a id="raw-btn" class="btn" href="" target="_blank">Raw</a>
-                    </div>
-                </div>
-                <div class="content" id="preview-item-content-div">
-                </div>
-            </div>
-
-
-<!--             <div class="space"></div> -->
-            <div id="no-internet-div" hidden>You are offline</div>
-            <div class="loader--ellipsis" id="loader-ellipsis-div">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
-            <div class="loader--spinner" id="main-loader-spinner-div">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
-            <form class="create-url" id="create-url" hidden>
-                <h3>Create repo-view URL</h3>
-                <label for="token">Github Access Token</label>
-                <div class="input-field">
-                    <input type="text" placeholder="..." id="token" required>
-                    <button name="btn-inp-paste" class="paste" target="#token"></button>
-                </div>
-                <label for="owner">Github Username</label>
-                <div class="input-field">
-                    <input type="text" placeholder="..." id="owner" required>
-                    <button name="btn-inp-paste" class="paste" target="#owner"></button>
-                </div>
-                <label for="repo">Github Repository</label>
-                <div class="input-field">
-                    <input type="text" placeholder="..." id="repo" required>
-                    <button name="btn-inp-paste" class="paste" target="#repo"></button>
-                </div>
-                <button name="btn-create-url">Create</button>
-                <div class="created-url" id="created-url">
-                    <a target="_blank" href=""></a>
-                    <button name="btn-copy-created-url">Copy</button>
-                </div>
-            </form>
-            <div class="footer">
-                <div class="made-with-love">
-                    <div>
-                        <strong><a href="https://github.com/ibrahemesam/repo-view" target="_blank">repo-view</a></strong>
-                        : created with ❤️ by
-                        <a href="https://www.linkedin.com/in/ibrahem-essam-eldeen-abbas-95492a218"  target="_blank"> Ibrahem Essam</a>
-                    </div>
-                    <div>
-                        <span> —  inspired by:
-                        <a href="https://gitfront.io" target="_blank">GitFront</a>  —</span>
-                    </div>
-                </div>
-            </div>
+      <ul id="tree-ul" class="tree" hidden>
+        <li class="header">
+          <div id="cwd-name-div"></div>
+          <div class="last"></div>
+        </li>
+      </ul>
+      <div class="blob-view" id="preview-div" hidden>
+        <div class="header">
+          <div id="preview-item-name-div"></div>
+          <div class="last">
+            <a id="raw-btn" class="btn" href="" target="_blank">Raw</a>
+          </div>
         </div>
-<!--         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script> -->
-        <script src="js/include-html.js"></script>
-        <script src="js/prism.js"></script>
-<!--         <script src="js/prism-line-numbers.js"></script> -->
-<!--         <script src="https://unpkg.com/commonmark@latest/dist/commonmark.min.js"></script> -->
-        <script src="https://unpkg.com/dompurify@latest/dist/purify.min.js"></script>
-        <script src="js/marked.min.js"></script>
-        <script type="module" src="js/main.js"></script>
-    </body>
+        <div class="content" id="preview-item-content-div"></div>
+      </div>
+
+      <!--             <div class="space"></div> -->
+      <div id="no-internet-div" hidden>You are offline</div>
+      <div class="loader--ellipsis" id="loader-ellipsis-div">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <div class="loader--spinner" id="main-loader-spinner-div">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <form class="create-url" id="create-url" hidden>
+        <h3>Create repo-view URL</h3>
+        <label for="token">Github Access Token</label>
+        <div class="input-field">
+          <input type="text" placeholder="..." id="token" required />
+          <button name="btn-inp-paste" class="paste" target="#token"></button>
+        </div>
+        <label for="owner">Github Username</label>
+        <div class="input-field">
+          <input type="text" placeholder="..." id="owner" required />
+          <button name="btn-inp-paste" class="paste" target="#owner"></button>
+        </div>
+        <label for="repo">Github Repository</label>
+        <div class="input-field">
+          <input type="text" placeholder="..." id="repo" required />
+          <button name="btn-inp-paste" class="paste" target="#repo"></button>
+        </div>
+        <button name="btn-create-url">Create</button>
+        <div class="created-url" id="created-url">
+          <a target="_blank"></a>
+          <button name="btn-copy-created-url">Copy</button>
+        </div>
+      </form>
+      <div class="footer">
+        <div class="made-with-love">
+          <div>
+            <strong
+              ><a
+                href="https://github.com/ibrahemesam/repo-view"
+                target="_blank"
+                >repo-view</a
+              ></strong
+            >
+            : created with ❤️ by
+            <a
+              href="https://www.linkedin.com/in/ibrahem-essam-eldeen-abbas-95492a218"
+              target="_blank"
+            >
+              Ibrahem Essam</a
+            >
+          </div>
+          <div>
+            <span>
+              — inspired by:
+              <a href="https://gitfront.io" target="_blank">GitFront</a> —</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script> -->
+    <script src="js/include-html.js"></script>
+    <script src="js/prism.js"></script>
+    <!--         <script src="js/prism-line-numbers.js"></script> -->
+    <!--         <script src="https://unpkg.com/commonmark@latest/dist/commonmark.min.js"></script> -->
+    <script src="https://unpkg.com/dompurify@latest/dist/purify.min.js"></script>
+    <script src="js/marked.min.js"></script>
+    <script type="module" src="js/main.js"></script>
+  </body>
 </html>

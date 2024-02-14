@@ -1,3 +1,4 @@
+<div id="README" hidden></div>
 <h1 align="center">~: repo-view :~</h1>
 <p align="center">
   <img src="https://github.com/ibrahemesam/repo-view/blob/main/asset/favicon.svg?raw=true" width="30%"/>
@@ -123,5 +124,3 @@ NB: this DEMO url EXPIRES on 12 May 2024. (this expiration is related to GitHub'
 This project is provided "AS IS" with absolutely "NO WARRANTY".
 If you gonna use its source-code somewhere: make a clear credit refering to <a href="https://github.com/ibrahemesam/repo-view" target="_blank">this repo-view repository</a>.
 </pre>
-TODO:-<br/>
-- [ ] make path /?with_no_params: view this README document

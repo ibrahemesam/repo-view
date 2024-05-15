@@ -82,7 +82,7 @@ it is a static web page. so, configuration is gonna be passed as url params.
 </pre>
 <pre>
 <strong>NB:</strong>
-Github Repository: dhould be just the repo name. Not the whole url. ie: "foo" instead of "https://github.com/username/foo"
+Github Repository: should be just the repo name. Not the whole url. ie: "foo" instead of "https://github.com/username/foo"
 <strong>NB:</strong>
 The resulting repo-view url has its token as encrypted string.
 - Why being encrypted?

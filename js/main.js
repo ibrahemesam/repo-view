@@ -474,6 +474,7 @@ async function mainLoop() {
             `?token=${encryptToken(
               inpToken.value.trim()
             )}&owner=${inpUsername.value.trim()}&repo=${inpRepo.value.trim()}`;
+          url = url.replace('//?', '/?');
           aCreatedUrl.setAttribute("href", url);
           aCreatedUrl.innerText = url;
           el.innerText = "Created";

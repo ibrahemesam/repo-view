@@ -1,7 +1,7 @@
 /*
 
 
- download a single file: https://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@github.com/ibrahemesam/repo-view-demo/raw/main/test.html
+ download a single file: $token@github.com/ibrahemesam/repo-view-demo/raw/main/test.html
 
  https://ibrahemesam.github.io/repo-view/?token=6769746875625f7061745f3131414b50464d3449306b4237616f43364a6147446a5f6430306733326c654f6354754b3463616b576b4a4a504c5a70756b317364655631356e76314853394e484f57323558433549564a77524c65534e34_enc&owner=ibrahemesam&repo=repo-view-demo
  getting default_branch:

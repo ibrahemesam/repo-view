@@ -316,3 +316,18 @@ body:has(.create-url:not([hidden])) div.footer > div {
     font-weight: 600;
     cursor: pointer;
 }
+
+div.download-logo {
+    background-image: url(../asset/browser-download-symbolic.svg);
+    background-position: center center;
+    background-size: 20px 50px;
+    background-repeat: no-repeat;
+    height: 15px;
+    width: 40px;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+
+html:has(head > style.darkreader)  div.download-logo {
+     background-image: url(../asset/browser-download-symbolic-dark.svg);
+}

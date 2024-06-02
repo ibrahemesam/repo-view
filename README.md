@@ -128,6 +128,6 @@ If you gonna use its source-code somewhere: make a clear credit refering to <a h
 </pre>
 <hr>
 <h1>TODO</h1>
-[ ] create a Download button
+[x] create a Download button
 <br>
 [ ] add url_param option to hide the "repo-view created  with ♥️ by Ibrahem Essam"

@@ -1,15 +1,3 @@
-/*
-
-
- download a single file: $token@github.com/ibrahemesam/repo-view-demo/raw/main/test.html
-
- https://ibrahemesam.github.io/repo-view/?token=6769746875625f7061745f3131414b50464d3449306b4237616f43364a6147446a5f6430306733326c654f6354754b3463616b576b4a4a504c5a70756b317364655631356e76314853394e484f57323558433549564a77524c65534e34_enc&owner=ibrahemesam&repo=repo-view-demo
- getting default_branch:
-  Make a call to /repos/:owner/:repo and read the default_branch property value - this is the name of the default branch
-to download a file when clicking <a> (instead of opening it in new tab): ./test.html
-TODO: buffering large files into blob ObjectURL
-https://github.com/ibrahemesam/repo-view/issues/6
- */
 const DEFAULT_API_HEADERS = {
   headers: {
     "X-GitHub-Api-Version": "2022-11-28",
@@ -37,7 +25,8 @@ const rawBtn = document.getElementById("raw-btn"),
   inpToken = document.getElementById("token"),
   inpUsername = document.getElementById("owner"),
   inpRepo = document.getElementById("repo"),
-  btnDownloadRepo = document.getElementById('btnDownloadRepo');
+  btnDownloadRepo = document.getElementById('btnDownloadRepo'),
+  btnDownloadFile = document.getElementById('btnDownloadFile');
 
 var onlineLock = {};
 onlineLock.lock = () => {
@@ -174,6 +163,8 @@ async function gotoPath(path, boolUpdateHistory = true, disableAels = true) {
         previewItemContentDiv.innerHTML = "";
         previewDiv.hidden = false;
         previewItemNameDiv.innerHTML = response.data.name;
+        // set btn-download-file
+        btnDownloadFile.setAttribute('onclick', `downloadFile('${response.data.name}', '${response.data.download_url}')`);
         // set Raw url
         rawBtn.setAttribute("href", response.data.download_url);
         initMarkdownView(decodeContent(response.data.content));
@@ -256,6 +247,8 @@ async function gotoPath(path, boolUpdateHistory = true, disableAels = true) {
       previewItemContentDiv.appendChild(pre);
     }
     previewDiv.hidden = false;
+     // set btn-download-file
+    btnDownloadFile.setAttribute('onclick', `downloadFile('${response.data.name}', '${response.data.download_url}')`);
     // set Raw url
     rawBtn.setAttribute("href", response.data.download_url);
   }
@@ -396,6 +389,24 @@ function copyTextToClipboard(text) {
   // Remove the temporary textarea element
   document.body.removeChild(tempElement);
   return successful;
+}
+window.downloadFile = (filename, url) => {
+  const fileStream = streamSaver.createWriteStream(filename)
+  fetch(url).then(res => {
+    const readableStream = res.body
+    // more optimized
+    if (window.WritableStream && readableStream.pipeTo) {
+      return readableStream.pipeTo(fileStream);
+        // .then(() => console.log('done writing'))
+    }
+    var writer = fileStream.getWriter()
+    const reader = res.body.getReader()
+    const pump = () => reader.read()
+      .then(res => res.done
+        ? writer.close()
+        : writer.write(res.value).then(pump))
+    pump()
+  })
 }
 async function importModule(module) {
   /* try importing a module forever until done */

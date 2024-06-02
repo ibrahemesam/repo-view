@@ -1,42 +1,15 @@
-function addBtnClone() {
-  const clone = document.createElement("a");
-  clone.className = "btn";
-  clone.textContent = "Clone";
-  clone.onclick = () => {
-    treeHeaderLast.style.gridTemplateColumns = "1fr 1fr";
-    const input = document.createElement("input");
-    input.setAttribute("readonly", true);
-    input.style.fontSize = "bold";
-    input.style.padding = "5px";
-    input.value = `git clone https://${window.token}@github.com/${window.owner}/${window.repo}`;
-    clone.remove();
+/*
 
-    const copy = document.createElement("a");
-    copy.className = "btn";
-    copy.textContent = "Copy";
-    copy.onclick = () => {
-      input.focus();
-      input.select();
-      document.execCommand("copy");
-      treeHeaderLast.innerHTML = "";
-      treeHeaderLast.style.gridTemplateColumns = "1fr";
-      treeHeaderLast.append(clone);
-      var _ = clone.onclick;
-      clone.onclick = undefined;
-      clone.textContent = "Copied!";
-      clone.style.cursor = "default";
-      setTimeout(() => {
-        clone.style.cursor = "pointer";
-        clone.onclick = _;
-        clone.textContent = "Clone";
-      }, 1500);
-    };
-    treeHeaderLast.innerHTML = "";
-    treeHeaderLast.append(input, copy);
-  };
-  treeHeaderLast.append(clone);
-}
 
+ download a single file: https://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@github.com/ibrahemesam/repo-view-demo/raw/main/test.html
+
+ https://ibrahemesam.github.io/repo-view/?token=6769746875625f7061745f3131414b50464d3449306b4237616f43364a6147446a5f6430306733326c654f6354754b3463616b576b4a4a504c5a70756b317364655631356e76314853394e484f57323558433549564a77524c65534e34_enc&owner=ibrahemesam&repo=repo-view-demo
+ getting default_branch:
+  Make a call to /repos/:owner/:repo and read the default_branch property value - this is the name of the default branch
+to download a file when clicking <a> (instead of opening it in new tab): ./test.html
+TODO: buffering large files into blob ObjectURL
+https://github.com/ibrahemesam/repo-view/issues/6
+ */
 const DEFAULT_API_HEADERS = {
   headers: {
     "X-GitHub-Api-Version": "2022-11-28",
@@ -63,7 +36,8 @@ const rawBtn = document.getElementById("raw-btn"),
   ),
   inpToken = document.getElementById("token"),
   inpUsername = document.getElementById("owner"),
-  inpRepo = document.getElementById("repo");
+  inpRepo = document.getElementById("repo"),
+  btnDownloadRepo = document.getElementById('btnDownloadRepo');
 
 var onlineLock = {};
 onlineLock.lock = () => {
@@ -585,7 +559,70 @@ async function mainLoop() {
   owner = owner ? owner : tokenAuthenticatedUser;
 
   document.title = `${owner} / ${repo} · ${document.title}`;
-  addBtnClone();
+  (function addBtnClone() {
+      const clone = document.createElement("a");
+      clone.className = "btn";
+      clone.textContent = "Clone";
+
+      clone.onclick = () => {
+        treeHeaderLast.style.gridTemplateColumns = "1fr 1fr";
+        const input = document.createElement("input");
+        input.setAttribute("readonly", true);
+        input.style.fontSize = "bold";
+        input.style.padding = "5px";
+        input.value = `git clone https://${window.token}@github.com/${window.owner}/${window.repo}`;
+        clone.remove();
+
+        const copy = document.createElement("a");
+        copy.className = "btn";
+        copy.textContent = "Copy";
+        copy.onclick = () => {
+          input.focus();
+          input.select();
+          document.execCommand("copy");
+          treeHeaderLast.innerHTML = "";
+          treeHeaderLast.style.gridTemplateColumns = "1fr";
+          treeHeaderLast.append(clone);
+          var _ = clone.onclick;
+          clone.onclick = undefined;
+          clone.textContent = "Copied!";
+          clone.style.cursor = "default";
+          setTimeout(() => {
+            clone.style.cursor = "pointer";
+            clone.onclick = _;
+            clone.textContent = "Clone";
+          }, 1500);
+        };
+        treeHeaderLast.innerHTML = "";
+        treeHeaderLast.append(input, copy);
+      };
+      treeHeaderLast.append(clone);
+    })();
+    btnDownloadRepo.addEventListener('click', async (evt)=>{
+      evt.preventDefault();
+      try {
+        var response = await octokit.request(
+          "GET /repos/{owner}/{repo}",
+          {
+            owner,
+            repo,
+            headers: DEFAULT_API_HEADERS.headers,
+          }
+        );
+      } catch (err) {
+        console.error("can't download repo");
+        console.error(err);
+        return;
+      }
+      var defaultBranch = response.data.default_branch;
+      var repoDownloadURL = `https://${token}@github.com/${owner}/${repo}/archive/refs/heads/${defaultBranch}.zip`;
+      var a = document.createElement('a');
+      a.setAttribute('href', repoDownloadURL);
+      a.setAttribute('download', `${repo}-${defaultBranch}.zip`);
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    });
 
   // get required path
   await gotoPath(path, false, false);

@@ -129,9 +129,8 @@ article.readme,
 }
 
 .header {
-  display: grid;
-  grid-template-columns: 1fr min-content;
-  grid-gap: 4px;
+  display: flex;
+  flex-direction: row;
   align-items: center;
   padding: 1em;
   font-size: 0.9rem;
@@ -140,11 +139,16 @@ article.readme,
   overflow-x: auto;
 }
 
+.header > div:first-child {
+  flex-grow: 1;
+}
+
 .last {
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 4px;
   margin: -1em auto;
+  margin-inline-start: 5px;
 }
 
 .btn {

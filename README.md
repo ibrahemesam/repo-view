@@ -78,6 +78,8 @@ it is a static web page. so, configuration is gonna be passed as url params.
 <strong>Then,           👇👇👇👇👇</strong>
 <p align="center">
   <img src="https://github.com/ibrahemesam/repo-view/blob/main/asset/usage.png?raw=true" width="80%"/>
+  NB: append this string "&hide_acknowledgement=true" to the created url to hide this acknowledgement
+  <img src="https://github.com/ibrahemesam/repo-view/blob/main/asset/acknowledgement.png?raw=true" width="80%"/>
 </p>
 </pre>
 <pre>
@@ -126,8 +128,9 @@ NB: this DEMO url EXPIRES on 2 Jun 2025. (this expiration is related to GitHub's
 This project is provided "AS IS" with absolutely "NO WARRANTY".
 If you gonna use its source-code somewhere: make a clear credit refering to <a href="https://github.com/ibrahemesam/repo-view" target="_blank">this repo-view repository</a>.
 </pre>
+<pre hidden>
 <hr>
 <h1>TODO</h1>
 [x] create a Download button
 <br>
-[ ] add url_param option to hide the "repo-view created  with ♥️ by Ibrahem Essam"
+</pre>

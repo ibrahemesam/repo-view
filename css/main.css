@@ -84,6 +84,14 @@ div.footer {
     bottom: 2px;
 }
 
+html[acknowledgement-hidden="true"] div.footer:has(.made-with-love) {
+    display: none;
+}
+
+html[acknowledgement-hidden="true"] #main-loader-spinner-div  {
+    top: 70%;
+}
+
 body:has(#preview-div[hidden]) div.footer
 /*body:has(ul.tree[hidden]) div.footer*/
 {

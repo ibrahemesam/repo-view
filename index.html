@@ -42,6 +42,10 @@
         }
         useDarkTheme ? darkreader.enable() : darkreader.disable();
       })();
+      if ((new URLSearchParams(document.location.search)).get("hide_acknowledgement") === 'true')
+      {
+        document.documentElement.setAttribute('acknowledgement-hidden', 'true');
+      }
     </script>
   </head>
   <body>

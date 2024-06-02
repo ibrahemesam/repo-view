@@ -90,10 +90,10 @@ The resulting repo-view url has its token as encrypted string.
   if the token is not encrypted, Github detects it and think it exists by mistake as a vulnerability.
   So, Github immediately disables the token, and the repo-view url is disabled as well.
 </pre>
-<h1><a href="https://ibrahemesam.github.io/repo-view/?token=6769746875625f7061745f3131414b50464d3449306b4237616f43364a6147446a5f6430306733326c654f6354754b3463616b576b4a4a504c5a70756b317364655631356e76314853394e484f57323558433549564a77524c65534e34_enc&owner=ibrahemesam&repo=repo-view-demo" target="_blank">DEMO</a> :-</h1>
+<h1><a href="https://ibrahemesam.github.io/repo-view/?token=6769746875625f7061745f3131414b50464d3449306c396c335239436e5a6572665f6a655a6562413433534350784b5362574d4852576c3838784d55656e344179494e5644734541323137445158323457524c4c53786a337a37473333_enc&owner=ibrahemesam&repo=repo-view-demo" target="_blank">DEMO</a> :-</h1>
 <pre>
 this demo repo is <a href="https://github.com/ibrahemesam/repo-view-demo">a private github repository</a>. if you visit it, you get 404 because it is <strong>Private</strong>.
-NB: this DEMO url EXPIRES on 31 Aug 2024. (this expiration is related to GitHub's fine-gained token settings)
+NB: this DEMO url EXPIRES on 2 Jun 2025. (this expiration is related to GitHub's fine-gained token settings)
 </pre>
 <pre><strong>NB: </strong> public repos can also be viewed</pre>
 <hr>

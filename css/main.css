@@ -339,3 +339,4 @@ div.download-logo {
 html:has(head > style.darkreader)  div.download-logo {
      background-image: url(../asset/browser-download-symbolic-dark.svg);
 }
+

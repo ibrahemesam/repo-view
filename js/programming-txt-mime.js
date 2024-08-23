@@ -122,3 +122,4 @@ const types = {
 };
 Object.freeze(types);
 export default types;
+

@@ -222,7 +222,7 @@ async function gotoPath(path, boolUpdateHistory = true, disableAels = true) {
       // normal text file
       var pre = document.createElement("pre"),
         code = document.createElement("code"),
-        lang = headerName.split(".").at(-1),
+        lang = headerName.split(".").at(-1).toLowerCase(),
         txt = decodeContent(response.data.content);
       if (!Prism.languages[lang]) {
         var _ = /\blang(?:uage)?-([\w-]+)\b/i.exec(txt);
@@ -645,3 +645,4 @@ window.addEventListener("popstate", function (event) {
 });
 
 mainLoop();
+

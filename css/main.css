@@ -28,8 +28,20 @@ img.dir {
 
 .blob-view .content {
     overflow: auto;
-    padding: 0;
+    padding: 2%;
     overflow-x: auto;
+}
+
+@media screen and (orientation: landscape) {
+    .blob-view .content > .nb-notebook {
+        margin-inline-start: 10%;
+    }
+}
+
+@media screen and (orientation: portrait) {
+    .blob-view .content > .nb-notebook {
+        margin-inline-start: 25%;
+    }
 }
 
 .blob-view .content pre {

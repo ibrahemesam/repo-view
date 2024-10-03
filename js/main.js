@@ -226,28 +226,40 @@ async function gotoPath(path, boolUpdateHistory = true, disableAels = true) {
       var pre = document.createElement("pre"),
         code = document.createElement("code"),
         lang = headerName.split(".").at(-1).toLowerCase(),
-        txt = decodeContent(response.data.content);
-      if (!Prism.languages[lang]) {
-        var _ = /\blang(?:uage)?-([\w-]+)\b/i.exec(txt);
-        if (_) lang = _[1];
-        else lang = "none";
+        txt = decodeContent(response.data.content),
+        txtJson = false;
+      try {
+        txtJson = JSON.parse(txt);
+      } catch (err) {
       }
-      // if (Prism.languages[lang]) {
-      pre.className = "line-numbers language-" + lang;
-      code.className = "language-" + lang;
-      code.style.display = "inline-block";
-      var match = txt.match(NEW_LINE_EXP);
-      var lineNumbersWrapper = `<span aria-hidden="true" class="line-numbers-rows">${new Array(
-        (match ? match.length + 1 : 1) + 1
-      ).join("<span></span>")}</span>`;
-      code.innerHTML =
-        DOMPurify.sanitize(Prism.highlight(txt, Prism.languages[lang], lang)) +
-        lineNumbersWrapper;
-      pre.appendChild(code);
-      // } else {
-      // el.textContent = txt;
-      // }
-      previewItemContentDiv.appendChild(pre);
+      if (lang === 'ipynp' && txtJson) {
+        var notebook = nb.parse(txtJson);
+        previewItemContentDiv.appendChild(notebook.render());
+        Prism.highlightAll();
+      } else {
+        if (!Prism.languages[lang]) {
+          var _ = /\blang(?:uage)?-([\w-]+)\b/i.exec(txt);
+          if (_) lang = _[1];
+          else if (txtJson) lang = 'json';
+          else lang = "txt";
+        }
+        // if (Prism.languages[lang]) {
+        pre.className = "line-numbers language-" + lang;
+        code.className = "language-" + lang;
+        code.style.display = "inline-block";
+        var match = txt.match(NEW_LINE_EXP);
+        var lineNumbersWrapper = `<span aria-hidden="true" class="line-numbers-rows">${new Array(
+          (match ? match.length + 1 : 1) + 1
+        ).join("<span></span>")}</span>`;
+        code.innerHTML =
+          DOMPurify.sanitize(Prism.highlight(txt, Prism.languages[lang], lang)) +
+          lineNumbersWrapper;
+        pre.appendChild(code);
+        // } else {
+        // el.textContent = txt;
+        // }
+        previewItemContentDiv.appendChild(pre);
+      }
     }
     previewDiv.hidden = false;
      // set btn-download-file

@@ -187,7 +187,7 @@ async function gotoPath(path, boolUpdateHistory = true, disableAels = true) {
       var b64content = response.data.content;
       if (b64content) {
         var imgSrc = `data:image/${headerName.split(".").at(-1)};base64,${
-          response.data.content.replaceAll('\\n', '');
+          response.data.content.replaceAll('\\n', '')
         }`;
       } else {
         var imgSrc = response.data.download_url;

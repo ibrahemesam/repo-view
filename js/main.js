@@ -186,7 +186,10 @@ async function gotoPath(path, boolUpdateHistory = true, disableAels = true) {
       // img render
       var b64content = response.data.content;
       if (b64content) {
-        var imgSrc = `data:image/${headerName.split(".").at(-1)};base64,${
+        console.log(response.data.content.replaceAll('\n', ''));
+        var imgType = headerName.split(".").at(-1).toLowerCase();
+        if (imgType === 'svg') imgType = "svg+xml";
+        var imgSrc = `data:image/${imgType};base64,${
           response.data.content.replaceAll('\n', '')
         }`;
       } else {

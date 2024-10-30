@@ -38,7 +38,7 @@ my <a href="#">repo-view</a> does exactly the same except that:
 - it has some extra features eg: dark theme switch, preview pdf, detect internet disconnect...
 </pre>
 <p align="center">
-  <img src="https://github.com/ibrahemesam/repo-view/blob/main/matrix-meme.png?raw=true" />
+  <img src="matrix-meme.png" />
 </p>
 <hr>
 <h1>Usage :-</h1>
@@ -77,10 +77,10 @@ it is a static web page. so, configuration is gonna be passed as url params.
 <h3>First, go to this page 👉 <a href="https://ibrahemesam.github.io/repo-view/?new">Create repo-view URL</a></h3>
 <strong>Then,           👇👇👇👇👇</strong>
 <p align="center">
-  <img src="https://github.com/ibrahemesam/repo-view/blob/main/asset/usage.png?raw=true" width="80%"/>
+  <img src="asset/usage.png" width="80%"/>
   NB: If you have to, append this string "&hide_acknowledgement=true"
   to the created url to hide this acknowledgement.
-  <img src="https://github.com/ibrahemesam/repo-view/blob/main/asset/acknowledgement.png?raw=true" width="80%"/>
+  <img src="asset/acknowledgement.png" width="80%"/>
   Otherwise, leave it to support me ❤️.
 </p>
 </pre>

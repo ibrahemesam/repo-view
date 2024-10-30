@@ -513,6 +513,12 @@ async function mainLoop() {
     },
     pedantic: false,
     gfm: true,
+    walkTokens: (token) => {
+        if (token.type === 'image' || token.type === 'link') {
+          // token.href = baseUrl + token.href;
+          console.log(token); // TODO HERE: translate token.href to the correct absolute URL
+        }
+    }
   });
   const urlParams = new URLSearchParams(document.location.search);
   window.repo = urlParams.get("repo");

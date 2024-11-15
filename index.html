@@ -43,9 +43,12 @@
         }
         useDarkTheme ? darkreader.enable() : darkreader.disable();
       })();
-      if ((new URLSearchParams(document.location.search)).get("hide_acknowledgement") === 'true')
-      {
-        document.documentElement.setAttribute('acknowledgement-hidden', 'true');
+      if (
+        new URLSearchParams(document.location.search).get(
+          "hide_acknowledgement"
+        ) === "true"
+      ) {
+        document.documentElement.setAttribute("acknowledgement-hidden", "true");
       }
     </script>
   </head>
@@ -57,7 +60,7 @@
       <ul id="tree-ul" class="tree" hidden>
         <li class="header">
           <div id="cwd-name-div"></div>
-          <a class=btn  href=# id="btnDownloadRepo">Download</a>
+          <a class="btn" href="#" id="btnDownloadRepo">Download</a>
           <div class="last"></div>
         </li>
       </ul>
@@ -147,11 +150,13 @@
     <!--         <script src="js/prism-line-numbers.js"></script> -->
     <!--         <script src="https://unpkg.com/commonmark@latest/dist/commonmark.min.js"></script> -->
     <script src="https://unpkg.com/dompurify@latest/dist/purify.min.js"></script>
+    <!-- IntersectionObserver browser support -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=IntersectionObserver"></script>
     <script src="js/marked.min.js"></script>
+    <script src="js/my-marked-base-url.js"></script>
     <script src="js/ipynp.notebook.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/web-streams-polyfill@2.0.2/dist/ponyfill.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/streamsaver@2.0.3/StreamSaver.min.js"></script>
     <script type="module" src="js/main.js"></script>
   </body>
 </html>
-

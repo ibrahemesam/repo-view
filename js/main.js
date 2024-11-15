@@ -1,4 +1,4 @@
-const DEFAULT_API_HEADERS = {
+window.DEFAULT_API_HEADERS = {
   headers: {
     "X-GitHub-Api-Version": "2022-11-28",
     "Accept-Charset": "UTF-8",
@@ -25,8 +25,8 @@ const rawBtn = document.getElementById("raw-btn"),
   inpToken = document.getElementById("token"),
   inpUsername = document.getElementById("owner"),
   inpRepo = document.getElementById("repo"),
-  btnDownloadRepo = document.getElementById('btnDownloadRepo'),
-  btnDownloadFile = document.getElementById('btnDownloadFile');
+  btnDownloadRepo = document.getElementById("btnDownloadRepo"),
+  btnDownloadFile = document.getElementById("btnDownloadFile");
 
 var onlineLock = {};
 onlineLock.lock = () => {
@@ -50,6 +50,42 @@ async function initMarkdownView(md) {
   el.classList.add("markdown");
   // console.log(md);
   el.innerHTML = DOMPurify.sanitize(marked.parse(md));
+  el.querySelectorAll("[data-repoview-lazy-src]").forEach(async (el) => {
+    // lazy-loading src
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(async (entry) => {
+        if (entry.isIntersecting) {
+          observer.disconnect(); // only load src once
+          // console.log(el);
+          var obj = JSON.parse(el.getAttribute("data-repoview-lazy-src"));
+          el.removeAttribute("data-repoview-lazy-src");
+          el.setAttribute(
+            "src",
+            resopnse2imgSrc(
+              await octokit.request(
+                "GET /repos/{owner}/{repo}/contents/{path}",
+                {
+                  owner: obj.owner,
+                  repo: obj.repo,
+                  path: obj.path,
+                  headers: DEFAULT_API_HEADERS.headers,
+                }
+              )
+            )
+          );
+        }
+      });
+    });
+    observer.observe(el);
+  });
+  el.querySelectorAll("a[data-repoview-href]").forEach((el) => {
+    var path = el.getAttribute("data-repoview-href");
+    el.removeAttribute("data-repoview-href");
+    el.style.cursor = "pointer";
+    // <a> href is fused with query parameter "path"
+    el.setAttribute("title", path);
+    el.setAttribute("onclick", `gotoPath("${path}"); return false;`);
+  });
   // el.innerHTML = (await octokit.request('POST /markdown', {
   //     text: md,
   //     headers: DEFAULT_API_HEADERS.headers
@@ -79,7 +115,24 @@ function updateHistory(path) {
   );
 }
 
-async function gotoPath(path, boolUpdateHistory = true, disableAels = true) {
+window.resopnse2imgSrc = (response) => {
+  // extracts img-src from GitHub API octokit response
+  // console.log(response);
+  var b64content = response.data.content;
+  if (b64content) {
+    return `data:${mime.getType(
+      response.data.name
+    )};base64,${response.data.content.replaceAll("\n", "")}`;
+  } else {
+    return response.data.download_url;
+  }
+};
+
+window.gotoPath = async function (
+  path,
+  boolUpdateHistory = true,
+  disableAels = true
+) {
   /* first of all: remove click event to prevent multiple concurrency calls to this methods */
   if (disableAels) {
     Array.from(locationDiv.querySelectorAll("a"))
@@ -164,7 +217,10 @@ async function gotoPath(path, boolUpdateHistory = true, disableAels = true) {
         previewDiv.hidden = false;
         previewItemNameDiv.innerHTML = response.data.name;
         // set btn-download-file
-        btnDownloadFile.setAttribute('onclick', `downloadFile('${response.data.name}', '${response.data.download_url}')`);
+        btnDownloadFile.setAttribute(
+          "onclick",
+          `downloadFile('${response.data.name}', '${response.data.download_url}')`
+        );
         // set Raw url
         rawBtn.setAttribute("href", response.data.download_url);
         initMarkdownView(decodeContent(response.data.content));
@@ -183,21 +239,11 @@ async function gotoPath(path, boolUpdateHistory = true, disableAels = true) {
     previewItemContentDiv.innerHTML = "";
     var m = String(mime.getType(path)); // m.slice(0, m.indexOf('/'))
     if (m.startsWith("image/")) {
+      // console.log(response);
       // img render
-      var b64content = response.data.content;
-      if (b64content) {
-        console.log(response.data.content.replaceAll('\n', ''));
-        var imgType = headerName.split(".").at(-1).toLowerCase();
-        if (imgType === 'svg') imgType = "svg+xml";
-        var imgSrc = `data:image/${imgType};base64,${
-          response.data.content.replaceAll('\n', '')
-        }`;
-      } else {
-        var imgSrc = response.data.download_url;
-      }
       previewItemContentDiv.innerHTML = `
                 <div class="content-img">
-                    <img src="${imgSrc}">
+                    <img src="${resopnse2imgSrc(response)}">
                 </div>
             `;
     } else if (m.endsWith("/pdf")) {
@@ -230,9 +276,8 @@ async function gotoPath(path, boolUpdateHistory = true, disableAels = true) {
         txtJson = false;
       try {
         txtJson = JSON.parse(txt);
-      } catch (err) {
-      }
-      if (lang === 'ipynp' && txtJson) {
+      } catch (err) {}
+      if (lang === "ipynp" && txtJson) {
         var notebook = nb.parse(txtJson);
         previewItemContentDiv.appendChild(notebook.render());
         Prism.highlightAll();
@@ -240,7 +285,7 @@ async function gotoPath(path, boolUpdateHistory = true, disableAels = true) {
         if (!Prism.languages[lang]) {
           var _ = /\blang(?:uage)?-([\w-]+)\b/i.exec(txt);
           if (_) lang = _[1];
-          else if (txtJson) lang = 'json';
+          else if (txtJson) lang = "json";
           else lang = "txt";
         }
         // if (Prism.languages[lang]) {
@@ -252,8 +297,9 @@ async function gotoPath(path, boolUpdateHistory = true, disableAels = true) {
           (match ? match.length + 1 : 1) + 1
         ).join("<span></span>")}</span>`;
         code.innerHTML =
-          DOMPurify.sanitize(Prism.highlight(txt, Prism.languages[lang], lang)) +
-          lineNumbersWrapper;
+          DOMPurify.sanitize(
+            Prism.highlight(txt, Prism.languages[lang], lang)
+          ) + lineNumbersWrapper;
         pre.appendChild(code);
         // } else {
         // el.textContent = txt;
@@ -262,8 +308,11 @@ async function gotoPath(path, boolUpdateHistory = true, disableAels = true) {
       }
     }
     previewDiv.hidden = false;
-     // set btn-download-file
-    btnDownloadFile.setAttribute('onclick', `downloadFile('${response.data.name}', '${response.data.download_url}')`);
+    // set btn-download-file
+    btnDownloadFile.setAttribute(
+      "onclick",
+      `downloadFile('${response.data.name}', '${response.data.download_url}')`
+    );
     // set Raw url
     rawBtn.setAttribute("href", response.data.download_url);
   }
@@ -319,7 +368,7 @@ async function gotoPath(path, boolUpdateHistory = true, disableAels = true) {
     locationDiv.appendChild(span);
   }
   locationDiv.hidden = false;
-}
+};
 
 class TreeItem extends HTMLElement {
   constructor() {
@@ -406,23 +455,25 @@ function copyTextToClipboard(text) {
   return successful;
 }
 window.downloadFile = (filename, url) => {
-  const fileStream = streamSaver.createWriteStream(filename)
-  fetch(url).then(res => {
-    const readableStream = res.body
+  const fileStream = streamSaver.createWriteStream(filename);
+  fetch(url).then((res) => {
+    const readableStream = res.body;
     // more optimized
     if (window.WritableStream && readableStream.pipeTo) {
       return readableStream.pipeTo(fileStream);
-        // .then(() => console.log('done writing'))
+      // .then(() => console.log('done writing'))
     }
-    var writer = fileStream.getWriter()
-    const reader = res.body.getReader()
-    const pump = () => reader.read()
-      .then(res => res.done
-        ? writer.close()
-        : writer.write(res.value).then(pump))
-    pump()
-  })
-}
+    var writer = fileStream.getWriter();
+    const reader = res.body.getReader();
+    const pump = () =>
+      reader
+        .read()
+        .then((res) =>
+          res.done ? writer.close() : writer.write(res.value).then(pump)
+        );
+    pump();
+  });
+};
 async function importModule(module) {
   /* try importing a module forever until done */
   while (true) {
@@ -474,7 +525,7 @@ async function mainLoop() {
             `?token=${encryptToken(
               inpToken.value.trim()
             )}&owner=${inpUsername.value.trim()}&repo=${inpRepo.value.trim()}`;
-          url = url.replace('//?', '/?');
+          url = url.replace("//?", "/?");
           aCreatedUrl.setAttribute("href", url);
           aCreatedUrl.innerText = url;
           el.innerText = "Created";
@@ -502,7 +553,6 @@ async function mainLoop() {
     await importModule("./programming-txt-mime.js")
   ).default;
   window.mime = new Mime(stdMimeTypes, otherMimeTypes, programmingTypes);
-
   marked.setOptions({
     highlight: (code, lang) => {
       if (Prism.languages[lang]) {
@@ -513,12 +563,6 @@ async function mainLoop() {
     },
     pedantic: false,
     gfm: true,
-    walkTokens: (token) => {
-        if (token.type === 'image' || token.type === 'link') {
-          // token.href = baseUrl + token.href;
-          console.log(token); // TODO HERE: translate token.href to the correct absolute URL
-        }
-    }
   });
   const urlParams = new URLSearchParams(document.location.search);
   window.repo = urlParams.get("repo");
@@ -589,72 +633,74 @@ async function mainLoop() {
   window.owner = urlParams.get("owner");
   // if no usernae is supplied, then: set is as the user who created that access_token
   owner = owner ? owner : tokenAuthenticatedUser;
+  marked.use(
+    extensionFixRelativeUrl(
+      `${document.location.origin}${document.location.pathname}?token=${window.tokenUrlParam}&owner=${window.owner}&repo=${window.repo}&path=`
+    )
+  );
 
   document.title = `${owner} / ${repo} · ${document.title}`;
   (function addBtnClone() {
-      const clone = document.createElement("a");
-      clone.className = "btn";
-      clone.textContent = "Clone";
+    const clone = document.createElement("a");
+    clone.className = "btn";
+    clone.textContent = "Clone";
 
-      clone.onclick = () => {
-        treeHeaderLast.style.gridTemplateColumns = "1fr 1fr";
-        const input = document.createElement("input");
-        input.setAttribute("readonly", true);
-        input.style.fontSize = "bold";
-        input.style.padding = "5px";
-        input.value = `git clone https://${window.token}@github.com/${window.owner}/${window.repo}`;
-        clone.remove();
+    clone.onclick = () => {
+      treeHeaderLast.style.gridTemplateColumns = "1fr 1fr";
+      const input = document.createElement("input");
+      input.setAttribute("readonly", true);
+      input.style.fontSize = "bold";
+      input.style.padding = "5px";
+      input.value = `git clone https://${window.token}@github.com/${window.owner}/${window.repo}`;
+      clone.remove();
 
-        const copy = document.createElement("a");
-        copy.className = "btn";
-        copy.textContent = "Copy";
-        copy.onclick = () => {
-          input.focus();
-          input.select();
-          document.execCommand("copy");
-          treeHeaderLast.innerHTML = "";
-          treeHeaderLast.style.gridTemplateColumns = "1fr";
-          treeHeaderLast.append(clone);
-          var _ = clone.onclick;
-          clone.onclick = undefined;
-          clone.textContent = "Copied!";
-          clone.style.cursor = "default";
-          setTimeout(() => {
-            clone.style.cursor = "pointer";
-            clone.onclick = _;
-            clone.textContent = "Clone";
-          }, 1500);
-        };
+      const copy = document.createElement("a");
+      copy.className = "btn";
+      copy.textContent = "Copy";
+      copy.onclick = () => {
+        input.focus();
+        input.select();
+        document.execCommand("copy");
         treeHeaderLast.innerHTML = "";
-        treeHeaderLast.append(input, copy);
+        treeHeaderLast.style.gridTemplateColumns = "1fr";
+        treeHeaderLast.append(clone);
+        var _ = clone.onclick;
+        clone.onclick = undefined;
+        clone.textContent = "Copied!";
+        clone.style.cursor = "default";
+        setTimeout(() => {
+          clone.style.cursor = "pointer";
+          clone.onclick = _;
+          clone.textContent = "Clone";
+        }, 1500);
       };
-      treeHeaderLast.append(clone);
-    })();
-    btnDownloadRepo.addEventListener('click', async (evt)=>{
-      evt.preventDefault();
-      try {
-        var response = await octokit.request(
-          "GET /repos/{owner}/{repo}",
-          {
-            owner,
-            repo,
-            headers: DEFAULT_API_HEADERS.headers,
-          }
-        );
-      } catch (err) {
-        console.error("can't download repo");
-        console.error(err);
-        return;
-      }
-      var defaultBranch = response.data.default_branch;
-      var repoDownloadURL = `https://${token}@github.com/${owner}/${repo}/archive/refs/heads/${defaultBranch}.zip`;
-      var a = document.createElement('a');
-      a.setAttribute('href', repoDownloadURL);
-      a.setAttribute('download', `${repo}-${defaultBranch}.zip`);
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    });
+      treeHeaderLast.innerHTML = "";
+      treeHeaderLast.append(input, copy);
+    };
+    treeHeaderLast.append(clone);
+  })();
+  btnDownloadRepo.addEventListener("click", async (evt) => {
+    evt.preventDefault();
+    try {
+      var response = await octokit.request("GET /repos/{owner}/{repo}", {
+        owner,
+        repo,
+        headers: DEFAULT_API_HEADERS.headers,
+      });
+    } catch (err) {
+      console.error("can't download repo");
+      console.error(err);
+      return;
+    }
+    var defaultBranch = response.data.default_branch;
+    var repoDownloadURL = `https://${token}@github.com/${owner}/${repo}/archive/refs/heads/${defaultBranch}.zip`;
+    var a = document.createElement("a");
+    a.setAttribute("href", repoDownloadURL);
+    a.setAttribute("download", `${repo}-${defaultBranch}.zip`);
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  });
 
   // get required path
   await gotoPath(path, false, false);
@@ -666,4 +712,3 @@ window.addEventListener("popstate", function (event) {
 });
 
 mainLoop();
-

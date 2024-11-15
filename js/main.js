@@ -78,13 +78,28 @@ async function initMarkdownView(md) {
     });
     observer.observe(el);
   });
+  // <a>:href
   el.querySelectorAll("a[data-repoview-href]").forEach((el) => {
     var path = el.getAttribute("data-repoview-href");
     el.removeAttribute("data-repoview-href");
+    if (el.hasAttribute("href")) e.removeAttribute("href");
     el.style.cursor = "pointer";
-    // <a> href is fused with query parameter "path"
     el.setAttribute("title", path);
     el.setAttribute("onclick", `gotoPath("${path}"); return false;`);
+  });
+  // md links
+  el.querySelectorAll('a[href^="data-repoview-href="]').forEach((el) => {
+    var path = el.getAttribute("href").slice("data-repoview-href=".length);
+    el.removeAttribute("href");
+    el.style.cursor = "pointer";
+    el.setAttribute("onclick", `gotoPath("${path}"); return false;`);
+  });
+  /* open external links in new tab */
+  el.querySelectorAll("a").forEach((el) => {
+    if (!el.hasAttribute("onclick")) {
+      el.setAttribute("target", "_blank");
+      el.setAttribute("rel", "noreferrer");
+    }
   });
   // el.innerHTML = (await octokit.request('POST /markdown', {
   //     text: md,

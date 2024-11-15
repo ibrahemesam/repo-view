@@ -1,8 +1,7 @@
-// based on: https://github.com/markedjs/marked-base-url
 const urlAttributeRegex =
   /([\w|data-]+)=["']?((?:.(?!["']?\s+(?:\S+)=|\s*\/?[>"']))+.)["']?/g;
 // const urlAttributeRegex = /(\S+)\s*=\s*([']|["])([\W\w]*?)\2/g;
-const is_http_regix = /^https?:\/\//g;
+const is_http_regix = /^https?:\/\//;
 const github_absolute_url_regix =
   /^https?:\/\/github.com\/(?<owner>[^/]*)\/(?<repo>[^/]*)(\/(?<path_type>blob|tree)\/(?<branch>[^/]*)(\/(?<path>.*))?)?/;
 // https://github.com/ibrahemesam/repo-view-demo/blob/main/directory/subdir/sample.c
@@ -65,13 +64,13 @@ function __parseUrl(url) {
 
 window.extensionFixUrls = () => {
   /*
-  TODO test:-
+  tested:-
     x a href relative
     x a href absolute
     x img src relative
     x img src absolute
-    - md link relative
-    - md link absolute
+    x md link relative
+    x md link absolute
     x md image relative
     x md image absolute
   */
@@ -81,7 +80,6 @@ window.extensionFixUrls = () => {
       // console.log(token);
       switch (token.type) {
         case "html":
-          // # TODO: reset repo-view-demo README.md
           token.text = token.text.replaceAll(
             urlAttributeRegex,
             (match, name, value) => {
@@ -115,7 +113,12 @@ window.extensionFixUrls = () => {
                     break;
                   case "href":
                     // console.log(value);
-                    if (!value.startsWith("#") && internal) {
+                    if (
+                      !value.startsWith("#") &&
+                      internal &&
+                      owner === window.owner &&
+                      repo === window.repo
+                    ) {
                       name = "data-repoview-href";
                       value = path;
                     }
@@ -150,13 +153,18 @@ window.extensionFixUrls = () => {
           }
           break;
         case "link":
+          var { internal, owner, repo, path } = __parseUrl(token.href);
           if (token.href.startsWith("#")) {
             // the URL is a local reference
             break;
-          } else if (internal) {
-            console.log(token);
-            token.title = path;
-            token.href = `javascript:(()=>{gotoPath("${path}"); return false;})();`;
+          } else if (
+            internal &&
+            owner === window.owner &&
+            repo === window.repo
+          ) {
+            // console.log(token);
+            if (token.title === null) token.title = path;
+            token.href = `data-repoview-href=${path}`;
           }
           break;
         default:

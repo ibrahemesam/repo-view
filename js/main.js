@@ -49,7 +49,7 @@ async function initMarkdownView(md) {
   var el = document.createElement("pre");
   el.classList.add("markdown");
   // console.log(md);
-  el.innerHTML = DOMPurify.sanitize(marked.parse(md));
+  el.innerHTML = DOMPurify.sanitize(await marked.parse(md));
   el.querySelectorAll("[data-repoview-lazy-src]").forEach(async (el) => {
     // lazy-loading src
     const observer = new IntersectionObserver((entries) => {
@@ -633,11 +633,7 @@ async function mainLoop() {
   window.owner = urlParams.get("owner");
   // if no usernae is supplied, then: set is as the user who created that access_token
   owner = owner ? owner : tokenAuthenticatedUser;
-  marked.use(
-    extensionFixRelativeUrl(
-      `${document.location.origin}${document.location.pathname}?token=${window.tokenUrlParam}&owner=${window.owner}&repo=${window.repo}&path=`
-    )
-  );
+  marked.use(extensionFixUrls());
 
   document.title = `${owner} / ${repo} · ${document.title}`;
   (function addBtnClone() {

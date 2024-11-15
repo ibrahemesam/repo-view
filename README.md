@@ -1,7 +1,7 @@
 <div id="README" hidden></div>
 <h1 align="center">~: repo-view :~</h1>
 <p align="center">
-  <img src="https://github.com/ibrahemesam/repo-view/blob/main/asset/favicon.svg?raw=true" width="30%"/>
+  <img src="asset/favicon.svg" width="30%"/>
 </p>
 — It is a static web page that uses Github REST API to preview repos.<br>
   It lets employers see your private GitHub repositories in your CV (with your permission of course) without making them public 💵↗️↗️
@@ -38,7 +38,7 @@ my <a href="#">repo-view</a> does exactly the same except that:
 - it has some extra features eg: dark theme switch, preview pdf, detect internet disconnect...
 </pre>
 <p align="center">
-  <img src="matrix-meme.png" />
+  <img src="asset/matrix-meme.png" />
 </p>
 <hr>
 <h1>Usage :-</h1>

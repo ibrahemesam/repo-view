@@ -1,354 +1,352 @@
 /*a { color: #dc8100; text-decoration: none; }
 a:hover { color: #efe8e8; text-decoration: none; }*/
 body {
-    margin: 0;
-    padding: 0;
-    width: 100vw !important;
-    top: 0 !important;
-    position: fixed;
-    overflow-x: hidden;
-    overflow: auto;
+  margin: 0;
+  padding: 0;
+  width: 100vw !important;
+  top: 0 !important;
+  position: fixed;
+  overflow-x: hidden;
+  overflow: auto;
 }
 
 .container {
-    height: 100vh !important;
+  height: 100vh !important;
 }
 
 img.file {
-    content: url('../asset/file.svg');
+  content: url("../asset/file.svg");
 }
 
 img.dir {
-    content: url('../asset/dir.svg');
+  content: url("../asset/dir.svg");
 }
 
 .location#location-div * {
-    user-select: none;
+  user-select: none;
 }
 
 .blob-view .content {
-    overflow: auto;
-    padding: 2%;
-    overflow-x: auto;
+  overflow: auto;
+  padding: 2%;
+  overflow-x: auto;
 }
 
 @media screen and (orientation: landscape) {
-    .blob-view .content > .nb-notebook {
-        margin-inline-start: 10%;
-    }
+  .blob-view .content > .nb-notebook {
+    margin-inline-start: 10%;
+  }
 }
 
 @media screen and (orientation: portrait) {
-    .blob-view .content > .nb-notebook {
-        margin-inline-start: 25%;
-    }
+  .blob-view .content > .nb-notebook {
+    margin-inline-start: 25%;
+  }
 }
 
 .blob-view .content pre {
-    width: 100%;
-    margin-top: 0;
-    margin-bottom: 0;
-    margin: 0;
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin: 0;
 }
 
 /*.blob-view .content pre code {
     width: calc(100% - 4.8em);
 }*/
 
-
 .blob-view .content pre.line-numbers {
-    width: calc(100% - 4.8em);
+  width: calc(100% - 4.8em);
 }
 
 .blob-view .content:has(iframe[src*="pdf.js"]) {
-    overflow-y: hidden;
+  overflow-y: hidden;
 }
 
 .blob-view .content pre:not(.line-numbers) {
-    padding: 1% 1%;
-    width: 98%;
-/*     text-wrap: balance; */
+  padding: 1% 1%;
+  width: 98%;
+  /*     text-wrap: balance; */
 }
 
 ul.tree {
-    max-height: 40vh;
-    overflow: auto;
+  max-height: 40vh;
+  overflow: auto;
 }
 
-
 body:has(ul.tree[hidden]),
-body:has(#preview-div[hidden]),
-{
-    height: 100vh !important;
-    overflow: hidden;
+body:has(#preview-div[hidden]) {
+  height: 100vh !important;
+  overflow: hidden;
 }
 
 body:has(#preview-div[hidden]) ul.tree {
-    max-height: 75vh;
+  max-height: 75vh;
 }
 
 body:has(ul.tree[hidden]) .blob-view .content {
-    height: 70vh !important;
+  height: 70vh !important;
 }
 
 div.footer {
-    position: fixed;
-    bottom: 2px;
+  /* position: fixed; */
+  bottom: 2px;
 }
 
 html[acknowledgement-hidden="true"] div.footer:has(.made-with-love) {
-    display: none;
+  display: none;
 }
 
-html[acknowledgement-hidden="true"] #main-loader-spinner-div  {
-    top: 70%;
+html[acknowledgement-hidden="true"] #main-loader-spinner-div {
+  top: 70%;
 }
 
 body:has(#preview-div[hidden]) div.footer
-/*body:has(ul.tree[hidden]) div.footer*/
-{
-    position: fixed;
-    bottom: 8px;
-/*     transform: translateY(-50%); */
+/*body:has(ul.tree[hidden]) div.footer*/ {
+  position: fixed;
+  bottom: 8px;
+  /*     transform: translateY(-50%); */
 }
 
-
 #main-loader-spinner-div {
-    position: fixed;
-    top: 60%;
-    zoom: 5;
-    left: 50%;
-    transform: translate(-50%, -100%);
+  position: fixed;
+  top: 60%;
+  zoom: 5;
+  left: 50%;
+  transform: translate(-50%, -100%);
 }
 body:has(ul.tree:not([hidden])) div#main-loader-spinner-div,
 body:has(#preview-div:not([hidden])) div#main-loader-spinner-div,
-body:has(.create-url:not([hidden])) div#main-loader-spinner-div
-{
-    display: none;
+body:has(.create-url:not([hidden])) div#main-loader-spinner-div {
+  display: none;
 }
 
-
-body:has(ul.tree[hidden]):has(#preview-div[hidden]):has(.container div.location[hidden]) div.footer {
-    position: fixed;
-    top: 60%;
-    left: 50%;
-    transform: translateX(-50%);
-    margin: auto;
-    padding: 10px;
-    outline: none;
-    user-select: none;
-    height: fit-content;
-    width: max-content;
+body:has(ul.tree[hidden]):has(#preview-div[hidden]):has(
+    .container div.location[hidden]
+  )
+  div.footer {
+  position: fixed;
+  top: 60%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: auto;
+  padding: 10px;
+  outline: none;
+  user-select: none;
+  height: fit-content;
+  width: max-content;
 }
 
 div.location * {
-    direction: ltr;
+  direction: ltr;
 }
 
-
-body:has(#tree-ul a[style*="text-decoration: none"][style*="cursor: default"]) div#loader-ellipsis-div {
-    display: inline-block;
+body:has(#tree-ul a[style*="text-decoration: none"][style*="cursor: default"])
+  div#loader-ellipsis-div {
+  display: inline-block;
 }
 div#loader-ellipsis-div {
-    display: none;
-    position: fixed;
-    top: 0vh;
-    right: 9vw;
-    z-index: 999999;
+  display: none;
+  position: fixed;
+  top: 0vh;
+  right: 9vw;
+  z-index: 999999;
 }
 
 div#loader-ellipsis-div:before {
-    content: "";
-    background-color: lavenderblush;
-    height: 37px;
-    position: fixed;
-    top: 2vh;
-    width: 62px;
-    border-radius: 30px;
+  content: "";
+  background-color: lavenderblush;
+  height: 37px;
+  position: fixed;
+  top: 2vh;
+  width: 62px;
+  border-radius: 30px;
 }
 
 div#no-internet-div {
-    background-color: lightcoral;
-    position: fixed;
-    top: 2vh;
-    left: 50%;
-    transform: translateX(-50%);
-    border-radius: 10px;
-    background-image: url(../asset/no-wifi.svg);
-    background-repeat: no-repeat;
-    background-position: 8px center;
-    background-size: 30px;
-    height: auto;
-    align-items: center;
-    width: max-content;
-    padding: 8px;
-    font-weight: bold;
-    text-indent: 35px;
+  background-color: lightcoral;
+  position: fixed;
+  top: 2vh;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 10px;
+  background-image: url(../asset/no-wifi.svg);
+  background-repeat: no-repeat;
+  background-position: 8px center;
+  background-size: 30px;
+  height: auto;
+  align-items: center;
+  width: max-content;
+  padding: 8px;
+  font-weight: bold;
+  text-indent: 35px;
 }
 
 .footer > .made-with-love {
-    border: solid;
-    border-radius: 5px;
-    border-color: cornflowerblue;
-    outline: inherit;
-    user-select: inherit;
-    width: fit-content;
-    margin: auto;
-    margin-top: 2rem;
-    padding: 5px;
+  border: solid;
+  border-radius: 5px;
+  border-color: cornflowerblue;
+  outline: inherit;
+  user-select: inherit;
+  width: fit-content;
+  margin: auto;
+  /* margin-top: 2rem; */
+  padding: 5px;
 }
 
-body:has(.create-url:not([hidden])) div.footer
-{
-    position: relative !important;
-    margin: auto !important;
-    padding: 10px !important;
-    outline: none !important;
-    user-select: none !important;
-    height: fit-content !important;
-    width: max-content !important;
-    bottom: 0 !important;
-    top: 0 !important;
-    transform: initial !important;
-    left: 0 !important;
+body:has(#preview-div[hidden]) div.footer > .made-with-love {
+  margin-top: 2rem;
+}
+
+body:has(.create-url:not([hidden])) div.footer {
+  position: relative !important;
+  margin: auto !important;
+  padding: 10px !important;
+  outline: none !important;
+  user-select: none !important;
+  height: fit-content !important;
+  width: max-content !important;
+  bottom: 0 !important;
+  top: 0 !important;
+  transform: initial !important;
+  left: 0 !important;
 }
 
 body:has(.create-url:not([hidden])) div.footer > div {
-    margin-top: 5px;
+  margin-top: 5px;
 }
 
 .create-url {
-    width: 90vw;
-    background-color: rgba(0, 0, 0, 0.2);
-    position: relative;
-    margin: auto;
-    margin-top: 2rem;
-    border-radius: 10px;
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255,255,255,0.1);
-    box-shadow: 0 0 40px rgba(8,7,16,0.6);
-    padding: 50px 35px;
-    padding-top: 0;
-    padding-bottom: 70px;
-    bottom: 0;
-    user-select: none;
+  width: 90vw;
+  background-color: rgba(0, 0, 0, 0.2);
+  position: relative;
+  margin: auto;
+  margin-top: 2rem;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+  padding: 50px 35px;
+  padding-top: 0;
+  padding-bottom: 70px;
+  bottom: 0;
+  user-select: none;
 }
 .create-url * {
-    font-family: 'Poppins',sans-serif;
-/*     color: #ffffff; */
-    letter-spacing: 0.5px;
-    outline: none;
-    border: none;
+  font-family: "Poppins", sans-serif;
+  /*     color: #ffffff; */
+  letter-spacing: 0.5px;
+  outline: none;
+  border: none;
 }
 .create-url h3 {
-    font-size: xx-large;
-    font-weight: bolder;
-    line-height: 25px;
-    text-align: center;
+  font-size: xx-large;
+  font-weight: bolder;
+  line-height: 25px;
+  text-align: center;
 }
 
 .create-url label {
-    display: block;
-    margin-top: 30px;
-    font-size: 16px;
-    font-weight: 500;
+  display: block;
+  margin-top: 30px;
+  font-size: 16px;
+  font-weight: 500;
 }
 .create-url .input-field {
-    display: flex;
-    flex-direction: row;
-    height: 50px;
-    overflow: hidden;
-    border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  height: 50px;
+  overflow: hidden;
+  border-radius: 5px;
 }
 .create-url .input-field > input {
-    height: inherit;
-    flex-grow: 1;
-    background-color: rgba(255,255,255,0.65);
-    border-radius: 3px;
-/*     padding: 0 10px; */
-    font-size: 14px;
-    font-weight: 300;
-    text-align: center;
-    text-overflow: ellipsis;
-    padding-left: 10px;
+  height: inherit;
+  flex-grow: 1;
+  background-color: rgba(255, 255, 255, 0.65);
+  border-radius: 3px;
+  /*     padding: 0 10px; */
+  font-size: 14px;
+  font-weight: 300;
+  text-align: center;
+  text-overflow: ellipsis;
+  padding-left: 10px;
 }
 .create-url .input-field > button {
-    background-image: url("../asset/paste.svg");
-    background-size: 90% 90%;
-    background-position: center center;
-    background-repeat: no-repeat;
-    width: 40px;
-    cursor: pointer;
+  background-image: url("../asset/paste.svg");
+  background-size: 90% 90%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: 40px;
+  cursor: pointer;
 }
 .create-url input::placeholder {
-    color: gray;
-    font-weight: bold;
-    text-align: center;
+  color: gray;
+  font-weight: bold;
+  text-align: center;
 }
 .create-url input#token {
-    font-size: x-small;
-    font-weight: 200;
+  font-size: x-small;
+  font-weight: 200;
 }
 .create-url > button {
-    margin-top: 20px;
-    width: 100%;
-    background-color: #ffffff;
-    color: #080710;
-    padding: 15px 0;
-    font-size: 18px;
-    font-weight: 600;
-    border-radius: 5px;
-    cursor: pointer;
-    position: relative;
-    left: 5px;
+  margin-top: 20px;
+  width: 100%;
+  background-color: #ffffff;
+  color: #080710;
+  padding: 15px 0;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+  left: 5px;
 }
 .create-url .created-url {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    height: 40px;
-    display: flex;
-    flex-direction: row;
-    width: calc(100% - 2 * 20px);
-    border-radius: 10px;
-    border: 1px solid rgba(0, 0, 0, 0.5);
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  width: calc(100% - 2 * 20px);
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
 }
 .create-url .created-url > a {
-    flex-grow: 1;
-    border: inherit;
-    border-top-left-radius: inherit;
-    border-bottom-left-radius: inherit;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    user-select: initial;
-    font-size: xx-small;
-    padding: 4px;
-    line-height: 10px;
+  flex-grow: 1;
+  border: inherit;
+  border-top-left-radius: inherit;
+  border-bottom-left-radius: inherit;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  user-select: initial;
+  font-size: xx-small;
+  padding: 4px;
+  line-height: 10px;
 }
 .create-url .created-url > button {
-    width: 80px;
-    border: inherit;
-    border-top-right-radius: inherit;
-    border-bottom-right-radius: inherit;
-    color: #080710;
-    font-size: 18px;
-    font-weight: 600;
-    cursor: pointer;
+  width: 80px;
+  border: inherit;
+  border-top-right-radius: inherit;
+  border-bottom-right-radius: inherit;
+  color: #080710;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 div.download-logo {
-    background-image: url(../asset/browser-download-symbolic.svg);
-    background-position: center center;
-    background-size: 20px 50px;
-    background-repeat: no-repeat;
-    height: 15px;
-    width: 40px;
-    border: 1px solid gray;
-    border-radius: 5px;
+  background-image: url(../asset/browser-download-symbolic.svg);
+  background-position: center center;
+  background-size: 20px 50px;
+  background-repeat: no-repeat;
+  height: 15px;
+  width: 40px;
+  border: 1px solid gray;
+  border-radius: 5px;
 }
 
-html:has(head > style.darkreader)  div.download-logo {
-     background-image: url(../asset/browser-download-symbolic-dark.svg);
+html:has(head > style.darkreader) div.download-logo {
+  background-image: url(../asset/browser-download-symbolic-dark.svg);
 }
-

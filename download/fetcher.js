@@ -114,13 +114,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
             updateStatus("Compressing files...");
             const content = await zip.generateAsync({ type: "blob" });
-            saveAs(content, `${path ? path.replace(/\/|%20/g, "-") : repo}.zip`);
+            saveAs(content, `${path ? repo+'_'+path.replace(/\/|%20/g, "-") : repo}.zip`);
 
             const fileList = zip.file(/.*/);
 
             updateProgress(0);
             updateStatus(
-                `Fetched ${fileList.length} files\nUser: ${owner}\nRepository: https://github.com/${owner}/${repo}\nFolder: ${path}\nSize: ${(
+                `Fetched ${fileList.length} files\nUser: ${owner}\nGithub Repository: ${owner}/${repo}\nFolder: ${path}\nSize: ${(
                     content.size /
                     1024 /
                     1024

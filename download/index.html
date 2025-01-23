@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>GitRepo Downloader</title>
+<!--        <meta
+            name="description"
+            content="GitRepo Zip Fetcher is a sleek tool for effortlessly downloading GitHub repositories and folders as ZIP files."
+        />-->
+        <meta name="keywords" content="github, repository, download, zip, code, offline, tool, user-friendly, easy, files" />
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <div class="container">
+<!--            <header>
+                <h1 aria-label="Heading">GitRepo Zip Fetcher</h1>
+                <p aria-label="Description">Effortlessly download GitHub repositories and folders</p>
+            </header>-->
+            <main>
+                <!--
+                <div class="input-wrapper">
+                    <input type="text" id="repoInput" placeholder="https://github.com/username/repo/[subfolder]" />
+                    <button id="toggleTokenBtn" class="toggle-token-btn">Use Token</button>
+                    <input type="text" id="tokenInput" placeholder="GitHub Personal Access Token" style="display: none" />
+                    <button id="fetchBtn" aria-label="Fetch repository">
+                        <i class="material-icons">get_app</i>
+                        Fetch
+                    </button>
+                </div>
+                <p id="tokenInfo" class="token-info" style="display: none">
+                    Token usage enhances API rate limit and give access to private repository.
+                </p>
+                -->
+                <div id="statusOutput" class="status-output" style="display: none">
+                    <pre id="statusLog" class="status-log" aria-label="Status Log"></pre>
+                </div>
+                <div id="fileListWrapper" class="status-output" style="display: none">
+                    <h3>Fetched Files:</h3>
+                    <ul id="fileList" class="file-list" aria-label="Fetched files"></ul>
+                </div>
+            </main>
+<!--            <footer aria-label="Footer">
+                <p>Made with ❤️ by <a href="https://github.com/chinxcode">Sachin Sharma</a></p>
+                <p class="note">Note: This application runs locally on your computer and does not collect or transmit any personal data.</p>
+            </footer>-->
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script type="module" src="fetcher.js"></script>
+        <!--<script>
+            window.va =
+                window.va ||
+                function () {
+                    (window.vaq = window.vaq || []).push(arguments);
+                };
+        </script>-->
+<!--         <script defer src="/_vercel/insights/script.js"></script> -->
+    </body>
+</html>

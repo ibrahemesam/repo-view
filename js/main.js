@@ -25,7 +25,7 @@ const rawBtn = document.getElementById("raw-btn"),
   inpToken = document.getElementById("token"),
   inpUsername = document.getElementById("owner"),
   inpRepo = document.getElementById("repo"),
-  btnDownloadRepo = document.getElementById("btnDownloadRepo"),
+  btnDownloadDir = document.getElementById("btnDownloadDir"),
   btnDownloadFile = document.getElementById("btnDownloadFile");
 
 var onlineLock = {};
@@ -692,27 +692,34 @@ async function mainLoop() {
     };
     treeHeaderLast.append(clone);
   })();
-  btnDownloadRepo.addEventListener("click", async (evt) => {
+  btnDownloadDir.addEventListener("click", async (evt) => {
     evt.preventDefault();
-    try {
-      var response = await octokit.request("GET /repos/{owner}/{repo}", {
-        owner,
-        repo,
-        headers: DEFAULT_API_HEADERS.headers,
-      });
-    } catch (err) {
-      console.error("can't download repo");
-      console.error(err);
-      return;
+    var repoUrl = `https://github.com/${owner}/repo`;
+    if (path !== '')
+    {
+      try {
+        var response = await octokit.request("GET /repos/{owner}/{repo}", {
+          owner,
+          repo,
+          headers: DEFAULT_API_HEADERS.headers,
+        });
+      } catch (err) {
+        console.error("can't download repo");
+        console.error(err);
+        return;
+      }
+      var defaultBranch = response.data.default_branch;
+      repoUrl += `/tree/${defaultBranch}/${path}`;
     }
-    var defaultBranch = response.data.default_branch;
-    var repoDownloadURL = `https://${token}@github.com/${owner}/${repo}/archive/refs/heads/${defaultBranch}.zip`;
-    var a = document.createElement("a");
-    a.setAttribute("href", repoDownloadURL);
-    a.setAttribute("download", `${repo}-${defaultBranch}.zip`);
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    window.open((document.location.origin + document.location.pathname + 'new').replaceAll('//', '/') + `?repo=${encodeURIComponent(repoUrl)}&token=${encodeURIComponent(token)}`);
+
+    // var repoDownloadURL = `https://${token}@github.com/${owner}/${repo}/archive/refs/heads/${defaultBranch}.zip`;
+    // var a = document.createElement("a");
+    // a.setAttribute("href", repoDownloadURL);
+    // a.setAttribute("download", `${repo}-${defaultBranch}.zip`);
+    // document.body.appendChild(a);
+    // a.click();
+    // document.body.removeChild(a);
   });
 
   // get required path

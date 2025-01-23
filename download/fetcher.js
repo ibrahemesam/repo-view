@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const fileListWrapper = document.getElementById("fileListWrapper");
     // const toggleTokenBtn = document.getElementById("toggleTokenBtn");
     // const tokenInfo = document.getElementById("tokenInfo");
+    const headerLabel = document.getElementById('header-label');
 
     let fetchedFiles = [];
     let progressPercentage = 0;
@@ -97,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const repo = decodeURIComponent(urlParams.get('repo'));
         const path = decodeURIComponent(urlParams.get('path'));
         const token = decodeURIComponent(urlParams.get('token'));
-
+        headerLabel.innerHTML = `Downloading: repo: ${owner}/${repo};\t     Dir: ${path}`;
         // if (!repoUrl.includes("github.com")) {
         //     updateStatus("Invalid URL. Please enter a valid GitHub repository URL.");
         //     return;

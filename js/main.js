@@ -556,7 +556,7 @@ async function mainLoop() {
     });
     return;
   }
-  window.Octokit = (await importModule("https://cdn.skypack.dev/@octokit/rest")).Octokit;
+  window.Octokit = (await importModule("https://cdn.skypack.dev/@octokit/core")).Octokit;
   window.Mime = (
     await importModule("https://unpkg.com/mime@latest/dist/src/index_lite.js")
   ).Mime;

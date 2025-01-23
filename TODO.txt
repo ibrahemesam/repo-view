@@ -1,1 +1,2 @@
 - [ ] fix repo download btn: [issues/10]: use https://github.com/chinxcode/github-repo-downloader
+- [ ] Octokit.js take too much time to load. so, use direct fetch() API instead

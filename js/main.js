@@ -694,24 +694,24 @@ async function mainLoop() {
   })();
   btnDownloadDir.addEventListener("click", async (evt) => {
     evt.preventDefault();
-    var repoUrl = `https://github.com/${owner}/repo`;
-    if (path !== '')
-    {
-      try {
-        var response = await octokit.request("GET /repos/{owner}/{repo}", {
-          owner,
-          repo,
-          headers: DEFAULT_API_HEADERS.headers,
-        });
-      } catch (err) {
-        console.error("can't download repo");
-        console.error(err);
-        return;
-      }
-      var defaultBranch = response.data.default_branch;
-      repoUrl += `/tree/${defaultBranch}/${path}`;
-    }
-    window.open((window.location.href.replace(window.location.search, '') + '/download/').replaceAll('//', '/') + `?repo=${encodeURIComponent(repoUrl)}&token=${encodeURIComponent(token)}`);
+    // var repoUrl = `https://github.com/${owner}/repo`;
+    // if (path !== '')
+    // {
+    //   try {
+    //     var response = await octokit.request("GET /repos/{owner}/{repo}", {
+    //       owner,
+    //       repo,
+    //       headers: DEFAULT_API_HEADERS.headers,
+    //     });
+    //   } catch (err) {
+    //     console.error("can't download repo");
+    //     console.error(err);
+    //     return;
+    //   }
+    //   var defaultBranch = response.data.default_branch;
+    //   repoUrl += `/tree/${defaultBranch}/${path}`;
+    // }
+    window.open((document.location.href.replace(document.location.search, '') + '/download/').replaceAll('//', '/') + `?owner=${encodeURIComponent(owner)}&repo=${encodeURIComponent(repo)}&path=${encodeURIComponent(path)}&token=${encodeURIComponent(token)}`);
 
     // var repoDownloadURL = `https://${token}@github.com/${owner}/${repo}/archive/refs/heads/${defaultBranch}.zip`;
     // var a = document.createElement("a");

@@ -92,16 +92,19 @@ document.addEventListener("DOMContentLoaded", () => {
         fetchedFiles = [];
         fileListWrapper.style.display = "none";
         const urlParams = new URLSearchParams(document.location.search);
-        const repoUrl = decodeURIComponent(urlParams.repo).trim();
-        const token = decodeURIComponent(urlParams.token).trim();
+        // const repoUrl = decodeURIComponent(urlParams.repo);
+        const owner = decodeURIComponent(urlParams.owner);
+        const repo = decodeURIComponent(urlParams.repo);
+        const path = decodeURIComponent(urlParams.path);
+        const token = decodeURIComponent(urlParams.token);
 
         // if (!repoUrl.includes("github.com")) {
         //     updateStatus("Invalid URL. Please enter a valid GitHub repository URL.");
         //     return;
         // }
 
-        const [, , , owner, repo, , , ...dirParts] = repoUrl.split("/");
-        const path = dirParts.join("/");
+        // const [, , , owner, repo, , , ...dirParts] = repoUrl.split("/");
+        // const path = dirParts.join("/");
 
         const octokit = new Octokit({ auth: token });
 
@@ -117,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             updateProgress(0);
             updateStatus(
-                `Fetched ${fileList.length} files\nUser: ${owner}\nRepository: ${repoUrl}\nFolder: ${path}\nSize: ${(
+                `Fetched ${fileList.length} files\nUser: ${owner}\nRepository: https://github.com/${owner}/${repo}\nFolder: ${path}\nSize: ${(
                     content.size /
                     1024 /
                     1024

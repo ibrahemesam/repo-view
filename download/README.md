@@ -1,5 +1,5 @@
 # using "GitRepo Zip Fetcher" to download repo
-> Credit: [github-repo-downloader](https://github.com/chinxcode/github-repo-downloader)
+> Credits: [github-repo-downloader](https://github.com/chinxcode/github-repo-downloader)
 <hr>
 # 🚀 GitRepo Zip Fetcher
 Effortlessly download GitHub repositories and folders as ZIP files with just a few clicks! 🖱️

@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const repo = decodeURIComponent(urlParams.get('repo'));
         const path = decodeURIComponent(urlParams.get('path'));
         const token = decodeURIComponent(urlParams.get('token'));
-        headerLabel.innerHTML = `Downloading: repo: ${owner}/${repo}${path ? ';\t     Dir: ' + path : ''}`;
+        headerLabel.innerHTML = `Downloading Repo: ${owner}/${repo}${path ? ';\t     Dir: ' + path : ''}`;
         // if (!repoUrl.includes("github.com")) {
         //     updateStatus("Invalid URL. Please enter a valid GitHub repository URL.");
         //     return;

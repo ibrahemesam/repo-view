@@ -133,13 +133,15 @@ function updateHistory(path) {
 window.resopnse2imgSrc = (response) => {
   // extracts img-src from GitHub API octokit response
   // console.log(response);
-  var b64content = response.data.content;
-  if (b64content) {
+  var download_url = response.data.download_url;
+  if (download_url) {
+    return download_url;
+  } else if (response.data.content) {
     return `data:${mime.getType(
       response.data.name
     )};base64,${response.data.content.replaceAll("\n", "")}`;
   } else {
-    return response.data.download_url;
+    return null;
   }
 };
 

@@ -711,7 +711,7 @@ async function mainLoop() {
       var defaultBranch = response.data.default_branch;
       repoUrl += `/tree/${defaultBranch}/${path}`;
     }
-    window.open((document.location.origin + document.location.pathname + 'download').replaceAll('//', '/') + `?repo=${encodeURIComponent(repoUrl)}&token=${encodeURIComponent(token)}`);
+    window.open((window.location.href.replace(window.location.search, '') + '/download/').replaceAll('//', '/') + `?repo=${encodeURIComponent(repoUrl)}&token=${encodeURIComponent(token)}`);
 
     // var repoDownloadURL = `https://${token}@github.com/${owner}/${repo}/archive/refs/heads/${defaultBranch}.zip`;
     // var a = document.createElement("a");

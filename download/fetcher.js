@@ -36,17 +36,34 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const fetchFileContent = async (octokit, owner, repo, path, fileName, totalSize) => {
+        // FIX issue #12: Download Directory corrupts image files
+        // const response = await octokit.rest.repos.getContent({
+        //     owner,
+        //     repo,
+        //     path,
+        //     mediaType: {
+        //         format: "raw",
+        //     },
+        // });
+        // updateStatus(`Fetching ${fileName}`);
+        // updateProgress(100);
+        // return response.data;
         const response = await octokit.rest.repos.getContent({
             owner,
             repo,
             path,
-            mediaType: {
-                format: "raw",
-            },
         });
-        updateStatus(`Fetching ${fileName}`);
-        updateProgress(100);
-        return response.data;
+
+        if (Array.isArray(response.data)) {
+            throw new Error("Path is a directory");
+        }
+
+        const binaryData = Uint8Array.from(
+            atob(response.data.content.replace(/\n/g, "")),
+                                           c => c.charCodeAt(0)
+        );
+
+        return binaryData;
     };
 
     const processFolderContents = async (octokit, owner, repo, folder, zip, path = "") => {
